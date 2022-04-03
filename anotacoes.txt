@@ -33,3 +33,9 @@
     - ``Build and Run`` -> Selecionar a Versão Java do Projeto e Apontar para a Pasta Main (Pasta Principal do projeto)
     - ``Apply`` -> ``OK``
 
+## Deploy no Heroku
+
+- Fazer o Commit e enviar para o GitHub (``git push origin main``)
+- Executar ``git subtree push --prefix bookstoremanager origin deploy``: Obtem os arquivos da Tree ``bookstoremanager`` do ultimo commit e envia para um Branch chamado ``deploy`` para o Heroku obter apenas o Projeto Java
+
+
