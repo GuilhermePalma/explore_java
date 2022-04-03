@@ -4,22 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
-// Permite a Notação dass propriedades da Classe
-@Entity
-// Gera os Getter e Setters
-@Data
-// Gera o Construtor
-@Builder
-// Cria Construtores da Classe com e sem os Parametros
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity // Permite a Notação dass propriedades da Classe
+@Data // Gera os Getter e Setters
+@Builder // Gera o Construtor
+@NoArgsConstructor // Cria Construtores da Classe com os Parametros
+@AllArgsConstructor // Cria Construtores da Classe sem os Parametros
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

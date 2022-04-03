@@ -31,7 +31,7 @@ public class BookController {
 
         // Usando da Anotação Lambok, retorna uma Resposta com o ID do Livro Inserido
         return MessageResponseDTO.builder()
-                .message("ID do Livro Inserido" + savedBook.getId())
+                .message("ID do Livro Inserido: " + savedBook.getId())
                 .build();
     }
 
