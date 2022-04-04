@@ -1,6 +1,8 @@
 package com.guilhermepalma.bookstoremanager.service;
 
+import com.guilhermepalma.bookstoremanager.dto.BookDTO;
 import com.guilhermepalma.bookstoremanager.dto.MessageResponseDTO;
+import com.guilhermepalma.bookstoremanager.entity.Author;
 import com.guilhermepalma.bookstoremanager.entity.Book;
 import com.guilhermepalma.bookstoremanager.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,23 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public MessageResponseDTO create(Book book) {
+    public MessageResponseDTO create(BookDTO bookDTO) {
+        Author author = Author.builder()
+                .id(bookDTO.getAuthor().getId())
+                .name(bookDTO.getAuthor().getName())
+                .age(bookDTO.getAuthor().getAge())
+                .build();
+
+        Book book = Book.builder()
+                .author(author)
+                .pages(bookDTO.getPages())
+                .chapter(bookDTO.getChapter())
+                .name(bookDTO.getName())
+                .isbn(bookDTO.getIsbn())
+                .publisherName(bookDTO.getPublisherName())
+                .id(bookDTO.getId())
+                .build();
+
         // Salva e Obtem o Livro Instanciado (com o ID)
         Book savedBook = bookRepository.save(book);
 
