@@ -1,9 +1,17 @@
 
 ### Spring Bot
 
+- Permite que crie aplicações stand-alone
+  - Permite que a aplicação seja executada apenas pelo JDK
+  - Facilita a criação de ``Containers`` por centralizar a parte executavel
+- Web Container
+  - Tomcat, Jetty Undertow: Onde as aplicações Java são executadas 
+  - Não é necessario gerar arquivos ``WAR``, o Spring Bot já faz o deploy dentro do servidor
 - Framework criado para facilitar a configuração de Spring
-- Cria um Projeto já pronto para ser usado
-  - Por meio de Starters (Grandes Bibliotecas de Configurações) -> Autoconfiguration
+- Utiliza Starters (Grandes Bibliotecas de Configurações) -> Configura a Aplicação por si proprio
+  - O incio de uma aplicação é mais rapido por já estar a maioria das coisas configurados
+  - Ganho de produtividade
+- O Spring Bor apenas facilita a configuração de uma aplicação Spring, mas ele não gera codigo
 - Pode ser usado para desenvolver sistemas web, microservices
 - Utiliza o Spring Initializr (https://start.spring.io) para configurar um Projeto Configurado
 
@@ -12,6 +20,7 @@
 - Spring Boot DevTools: Conjuntos de Ferramentas para o Desenvolvimento do Projeto, como o LiveReload (Carregar alterações de forma rapida e simples)
 - Spring Web: Conjuntos de Ferramentas utilizadas para o Desenvolvimento Web
 - Spring Boot Actuator: Permite monitar a aplicação Java
+  - Algumas Metricas Observadas: Health, Metrics, Beans, Propriedades, Loggers
 - Spring Data JPA: Faz o gerenciamento do banco de dados
 - H2 Database: Cria um banco de dados em memoria
 
