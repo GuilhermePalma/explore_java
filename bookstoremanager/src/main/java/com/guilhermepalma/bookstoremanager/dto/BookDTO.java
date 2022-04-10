@@ -1,7 +1,9 @@
 package com.guilhermepalma.bookstoremanager.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Id;
@@ -13,6 +15,8 @@ import javax.validation.constraints.Size;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookDTO {
     @Id
     private Long id;
