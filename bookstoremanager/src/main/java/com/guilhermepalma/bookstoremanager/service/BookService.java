@@ -2,7 +2,6 @@ package com.guilhermepalma.bookstoremanager.service;
 
 import com.guilhermepalma.bookstoremanager.dto.BookDTO;
 import com.guilhermepalma.bookstoremanager.dto.MessageResponseDTO;
-import com.guilhermepalma.bookstoremanager.entity.Author;
 import com.guilhermepalma.bookstoremanager.entity.Book;
 import com.guilhermepalma.bookstoremanager.mapper.BookMapper;
 import com.guilhermepalma.bookstoremanager.repository.BookRepository;
@@ -35,7 +34,7 @@ public class BookService {
 
         // Usando da Anotação Lambok, retorna uma Resposta com o ID do Livro Inserido
         return MessageResponseDTO.builder().build();
-               // .message("ID do Livro Inserido: " + savedBook.getId())
-               // .build();
+        // .message("ID do Livro Inserido: " + savedBook.getId())
+        // .build();
     }
 }
