@@ -13,9 +13,19 @@
         </processorPath>
         <module name="bookstoremanager" />
       </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="exampleJPA2" />
+        <module name="exampleJPA" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bookstoremanager" target="16" />
+      <module name="exampleJPA" target="16" />
+      <module name="exampleJPA1" target="1.8" />
+      <module name="exampleJPA2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
