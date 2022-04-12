@@ -45,7 +45,7 @@ public class UserTest {
     }
 
     /**
-     * Metodo Responsavel por validar a Inserção de um Usuario
+     * Metodo Responsavel por executar a Inserção de um Usuario
      */
     private static void insertUser() {
         try {
@@ -82,6 +82,9 @@ public class UserTest {
         }
     }
 
+    /**
+     * Metodo Responsavel por Listar todos os {@link User} do Banco de Dados
+     */
     private static void getAllUsers() {
         try {
             // Obtem todos os Usuarios com todos os seus atributos (colunas)
@@ -100,6 +103,9 @@ public class UserTest {
         }
     }
 
+    /**
+     * Metodo Padrão para atualizar um {@link User}
+     */
     private static void updateUser() {
         try {
             entityManager.getTransaction().begin();
@@ -122,8 +128,8 @@ public class UserTest {
     }
 
     /**
-     * Realiza uma atualização a partir de um Objeto Gerenciavel: um objeto que está sendo
-     * observado pelo JPA e em algum momento será sincronizado.
+     * Realiza uma atualização com um Objeto Gerenciavel: Objeto que está sendo
+     * observado pelo JPA e em algum momento o Banco de Dados será sincronizado com ele.
      */
     private static void updateManageableObject() {
         try {
@@ -147,8 +153,9 @@ public class UserTest {
     }
 
     /**
-     * Realiza uma atualização a partir de um Objeto Gerenciavel: um objeto que NÃO está sendo
-     * observado pelo JPA, sendo necessario chamar explicitamente o metodo para sincronizar.
+     * Realiza uma atualização a partir de um Objeto Gerenciavel: Objeto
+     * que NÃO está sendo observado pelo JPA, sendo necessario chamar
+     * explicitamente o metodo para sincronizar.
      */
     private static void updateNotManageableObject() {
         try {
