@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/Explore_Java.iml" filepath="$PROJECT_DIR$/.idea/Explore_Java.iml" />
       <module fileurl="file://$PROJECT_DIR$/bookstoremanager/bookstoremanager.iml" filepath="$PROJECT_DIR$/bookstoremanager/bookstoremanager.iml" />
       <module fileurl="file://$PROJECT_DIR$/exampleJPA/exampleJPA.iml" filepath="$PROJECT_DIR$/exampleJPA/exampleJPA.iml" />
-      <module fileurl="file://$PROJECT_DIR$/exampleJPA2/exampleJPA2.iml" filepath="$PROJECT_DIR$/exampleJPA2/exampleJPA2.iml" />
     </modules>
   </component>
 </project>
