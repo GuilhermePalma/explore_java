@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Classe Responsavel por realizar os Testes nas Operações do Banco
@@ -21,9 +22,9 @@ public class UserTest {
         insertUser();
         getUserId(2L);
         getAllUsers();
-        updateManageableObject(2L);
-        updateNotManageableObject(2L);
-        updateUser(2L);
+        updateManageableObject();
+        updateNotManageableObject();
+        updateUser();
 
         entityManager.close();
         entityManagerFactory.close();
@@ -99,14 +100,14 @@ public class UserTest {
         }
     }
 
-    private static void updateUser(Long id) {
+    private static void updateUser() {
         try {
             entityManager.getTransaction().begin();
 
             // Obtem e altera os dados do Usuario
-            User user = getUserId(id) == null ? new User() : getUserId(id);
-            user.setName("Miguel");
-            user.setEmail("miguel@email.com");
+            User user = getUserId(3L) == null ? new User() : getUserId(3L);
+            Objects.requireNonNull(user).setName("Miguel");
+            Objects.requireNonNull(user).setEmail("miguel@email.com");
 
             // Pega o Objeto que está no Banco e realiza o Update
             entityManager.merge(user);
@@ -124,14 +125,14 @@ public class UserTest {
      * Realiza uma atualização a partir de um Objeto Gerenciavel: um objeto que está sendo
      * observado pelo JPA e em algum momento será sincronizado.
      */
-    private static void updateManageableObject(Long id) {
+    private static void updateManageableObject() {
         try {
             entityManager.getTransaction().begin();
 
             // Obtem e altera os dados do Usuario
-            User user = getUserId(id) == null ? new User() : getUserId(id);
-            user.setName("Miguel Gerenciavel");
-            user.setEmail("miguel@email.com");
+            User user = getUserId(3L) == null ? new User() : getUserId(3L);
+            Objects.requireNonNull(user).setName("Miguel Gerenciavel");
+            Objects.requireNonNull(user).setEmail("miguel@email.com");
 
             // Uma vez que o objeto é gerenciavel, ele é sincronizado por si só
             // entityManager.merge(user);
@@ -139,7 +140,7 @@ public class UserTest {
             // Finaliza e Executa a manipulação
             entityManager.getTransaction().commit();
 
-            System.out.println("User Changed to: " + user);
+            System.out.println("User Manageable Changed to: " + user);
         } catch (Exception ex) {
             System.out.println("Exception in List Users: \n" + ex.getMessage());
         }
@@ -149,14 +150,14 @@ public class UserTest {
      * Realiza uma atualização a partir de um Objeto Gerenciavel: um objeto que NÃO está sendo
      * observado pelo JPA, sendo necessario chamar explicitamente o metodo para sincronizar.
      */
-    private static void updateNotManageableObject(Long id) {
+    private static void updateNotManageableObject() {
         try {
             entityManager.getTransaction().begin();
 
             // Obtem e altera os dados do Usuario
-            User user = getUserId(id) == null ? new User() : getUserId(id);
-            user.setName("Miguel Não Gerenciavel");
-            user.setEmail("miguel@email.com");
+            User user = getUserId(3L) == null ? new User() : getUserId(3L);
+            Objects.requireNonNull(user).setName("Miguel Não Gerenciavel");
+            Objects.requireNonNull(user).setEmail("miguel@email.com");
 
             // Torna o Objeto "User" um Objeto não Gerenciavel. Ou seja, é necessario
             // chamar o "merge" para as Alterações
@@ -168,7 +169,7 @@ public class UserTest {
             // Finaliza e Executa a manipulação
             entityManager.getTransaction().commit();
 
-            System.out.println("User Changed to: " + user);
+            System.out.println("User Not Manageable Changed to: " + user);
         } catch (Exception ex) {
             System.out.println("Exception in List Users: \n" + ex.getMessage());
         }
