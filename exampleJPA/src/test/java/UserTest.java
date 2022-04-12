@@ -21,6 +21,8 @@ public class UserTest {
         insertUser();
         getUserId(2L);
         getAllUsers();
+        updateManageableObject(2L);
+        updateNotManageableObject(2L);
         updateUser(2L);
 
         entityManager.close();
@@ -54,7 +56,7 @@ public class UserTest {
             // Salva um Objeto no Banco de Dados
             entityManager.persist(newUser);
 
-            System.out.println("User Inserted: " + newUser.toString());
+            System.out.println("User Inserted: " + newUser);
 
             // Finaliza a Operação com o Banco de Dados
             entityManager.getTransaction().commit();
@@ -97,7 +99,7 @@ public class UserTest {
         }
     }
 
-    private static void updateUser(Long id){
+    private static void updateUser(Long id) {
         try {
             entityManager.getTransaction().begin();
 
@@ -112,10 +114,63 @@ public class UserTest {
             // Finaliza e Executa a manipulação
             entityManager.getTransaction().commit();
 
-            System.out.println("User Changed to: " + user.toString());
+            System.out.println("User Changed to: " + user);
         } catch (Exception ex) {
             System.out.println("Exception in List Users: \n" + ex.getMessage());
         }
     }
 
+    /**
+     * Realiza uma atualização a partir de um Objeto Gerenciavel: um objeto que está sendo
+     * observado pelo JPA e em algum momento será sincronizado.
+     */
+    private static void updateManageableObject(Long id) {
+        try {
+            entityManager.getTransaction().begin();
+
+            // Obtem e altera os dados do Usuario
+            User user = getUserId(id) == null ? new User() : getUserId(id);
+            user.setName("Miguel Gerenciavel");
+            user.setEmail("miguel@email.com");
+
+            // Uma vez que o objeto é gerenciavel, ele é sincronizado por si só
+            // entityManager.merge(user);
+
+            // Finaliza e Executa a manipulação
+            entityManager.getTransaction().commit();
+
+            System.out.println("User Changed to: " + user);
+        } catch (Exception ex) {
+            System.out.println("Exception in List Users: \n" + ex.getMessage());
+        }
+    }
+
+    /**
+     * Realiza uma atualização a partir de um Objeto Gerenciavel: um objeto que NÃO está sendo
+     * observado pelo JPA, sendo necessario chamar explicitamente o metodo para sincronizar.
+     */
+    private static void updateNotManageableObject(Long id) {
+        try {
+            entityManager.getTransaction().begin();
+
+            // Obtem e altera os dados do Usuario
+            User user = getUserId(id) == null ? new User() : getUserId(id);
+            user.setName("Miguel Não Gerenciavel");
+            user.setEmail("miguel@email.com");
+
+            // Torna o Objeto "User" um Objeto não Gerenciavel. Ou seja, é necessario
+            // chamar o "merge" para as Alterações
+            entityManager.detach(user);
+
+            // Responsavel por Sincronizar as Alterações do Usuario
+            entityManager.merge(user);
+
+            // Finaliza e Executa a manipulação
+            entityManager.getTransaction().commit();
+
+            System.out.println("User Changed to: " + user);
+        } catch (Exception ex) {
+            System.out.println("Exception in List Users: \n" + ex.getMessage());
+        }
+    }
 }

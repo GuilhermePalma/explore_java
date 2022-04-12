@@ -84,10 +84,14 @@ Mapeamento Objeto Relacional
 - Usando o Arquivo ``persistence.xml`` (JPA)
   - Nele é possivel determiar o comportamento do JPA e Hibernate no Projeto
   - Configurações da Conexão com o Banco de Dados, Geração de Tabelas, Exibição de Queries SQLs
-
-
-
-
+- Estados JPA
+  - Estado Gerenciavel: 
+    - O Objeto está sendo observado 
+    - Qualquer alterção feita no Objeto o JPA sincroniza com o Banco de Dados
+  - Estado não Gerenciavel
+    - O Objeto só será atualizado quando um metodo for chamado explicitamente (Ex: ``merge``)
+    - Mais recomendado de se utilizar, já que controla quando a alteração será realiza no Banco de Dados
+    - Para tornar um Objeto não Gerenciavel, usar ``entityManager.detach(object)``
 
 
 
