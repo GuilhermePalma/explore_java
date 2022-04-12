@@ -25,6 +25,7 @@ public class UserTest {
         updateManageableObject();
         updateNotManageableObject();
         updateUser();
+        deleteUser();
 
         entityManager.close();
         entityManagerFactory.close();
@@ -177,6 +178,34 @@ public class UserTest {
             entityManager.getTransaction().commit();
 
             System.out.println("User Not Manageable Changed to: " + user);
+        } catch (Exception ex) {
+            System.out.println("Exception in List Users: \n" + ex.getMessage());
+        }
+    }
+
+    /**
+     * Metodo Responsavel por Realizar a Exclusão do último Usuario Cadastrado
+     */
+    private static void deleteUser() {
+        try {
+            // Executa a Query que obtem apenas 1 Usuario na Ordem Decrescente
+            String jpql = "SELECT u FROM User u ORDER BY id DESC";
+            TypedQuery<User> queryUser = entityManager.createQuery(jpql, User.class);
+            queryUser.setMaxResults(1);
+
+            // Obtem o Unico Usuario da Query
+            User user = queryUser.getSingleResult();
+
+            // Prepara a EntityManager para a Exclusão
+            entityManager.getTransaction().begin();
+
+            // Exclui o Usuario
+            entityManager.remove(user);
+
+            // Executa as Alterações no Banco de Dados
+            entityManager.getTransaction().commit();
+
+            System.out.println("User Exclued: " + user);
         } catch (Exception ex) {
             System.out.println("Exception in List Users: \n" + ex.getMessage());
         }
