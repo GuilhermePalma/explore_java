@@ -1,5 +1,7 @@
 package com.guilhermepalma.exampleJPA.model.DAO;
 
+import com.guilhermepalma.exampleJPA.model.User;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -96,12 +98,84 @@ public class DAO<E> {
     }
 
     /**
+     * Metodo Encadeado (Retorna uma instância da Propria Classe) reponsavel
+     * por Realizar uma Exclusão de um Dado no Banco de Dados
+     *
+     * @param entity Instancia do Registro da Classe que será exlcuido
+     * @return {@link DAO Instancia da Propria Classe DAO}
+     */
+    public DAO<E> delete(E entity) {
+        entityManager.remove(entity);
+        return this;
+    }
+
+    /**
+     * Metodo Encadeado (Retorna uma instância da Propria Classe) reponsavel
+     * por Realizar uma Atualização de um Registro no Banco de Dados
+     *
+     * @param entity Instancia do Registro da Classe com os Dados Atualizados
+     * @return {@link DAO Instancia da Propria Classe DAO}
+     */
+    public DAO<E> update(E entity) {
+        // Pega o Objeto que está no Banco e realiza o Update
+        entityManager.merge(entity);
+        return this;
+    }
+
+    /**
+     * Metodo Encadeado (Retorna uma instância da Propria Classe) reponsavel
+     * por Realizar uma Exclusão de um Dado no Banco de Dados
+     *
+     * @param id ID do Registro que será excluido
+     * @return {@link DAO Instancia da Propria Classe DAO}
+     */
+    public DAO<E> deleteByID(Long id) {
+        entityManager.remove(getRegiterById(id));
+        return this;
+    }
+
+    /**
      * Realiza o Cadastro Completo da {@link E Classe Generica}
      *
+     * @param entity Instancia do Registro da Classe que será Inserido
      * @return {@link DAO Instancia da Propria Classe DAO}
      */
     public DAO<E> registerAtomic(E entity) {
         return this.openTransaction().register(entity).commitTransaction();
+    }
+
+    /**
+     * Exclui Cadastro Completo da {@link E Classe Generica} por meio de uma
+     * instancia da classe Informada
+     *
+     * @param entity Instancia do Registro da Classe que será exlcuido
+     * @return {@link DAO Instancia da Propria Classe DAO}
+     */
+    public DAO<E> deleteAtomic(E entity) {
+        return this.openTransaction().delete(entity).commitTransaction();
+    }
+
+    /**
+     * Exclui Cadastro Completo da {@link E Classe Generica} por meio do ID do
+     * Registro da Classe
+     *
+     * @param id ID do Registro que será excluido
+     * @return {@link DAO Instancia da Propria Classe DAO}
+     */
+    public DAO<E> deleteAtomic(Long id) {
+        E entity = getRegiterById(id);
+        return this.openTransaction().delete(entity).commitTransaction();
+    }
+
+    /**
+     * Atualiza o Cadastro Completo da {@link E Classe Generica} por uma
+     * instância da classe Informada
+     *
+     * @param entity Instancia do Registro da Classe que será exlcuido
+     * @return {@link DAO Instancia da Propria Classe DAO}
+     */
+    public DAO<E> updateAtomic(E entity) {
+        return this.openTransaction().update(entity).commitTransaction();
     }
 
     /**
@@ -131,6 +205,31 @@ public class DAO<E> {
      */
     public List<E> getAllRegisters() {
         return getAllRegisters(ALL_REGISTER, ALL_REGISTER);
+    }
+
+    /**
+     * Obtem um Registro pelo ID informado
+     *
+     * @param id ID do Registro no Banco de Dados
+     * @return {@link E Entity}
+     */
+    public E getRegiterById(Long id) {
+        // .find(classe mapeada que será obtida, tipo de dado buscado)
+        return entityManager.find(referenceClass, id);
+    }
+
+
+    /**
+     * Obtem o Utlimo Registro do Bano de Dados
+     *
+     * @return {@link E Entity}
+     */
+    public E getLastRecord() {
+        String jpql = "SELECT e FROM " + referenceClass.getName() + " e ORDER BY e.id DESC";
+        TypedQuery<E> query = entityManager.createQuery(jpql, referenceClass);
+        query.setMaxResults(1);
+        
+        return query.getResultList().get(0);
     }
 
     /**
