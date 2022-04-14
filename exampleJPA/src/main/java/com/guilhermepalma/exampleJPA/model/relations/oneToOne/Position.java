@@ -1,4 +1,4 @@
-package com.guilhermepalma.exampleJPA.model;
+package com.guilhermepalma.exampleJPA.model.relations.oneToOne;
 
 import javax.persistence.*;
 

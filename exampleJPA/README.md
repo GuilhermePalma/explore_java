@@ -3,6 +3,33 @@
 Projeto ``exmapleJPA``: Projeto Pratico das Diferentes abordagens utilizando o Java Persistence API (JPA) para Mapear,
 Manipular e Gerenciar Tabelas, Registros e Colunas no Banco de Dados MySQL
 
+## Estrutura do Projeto
+
+- [Configurações do Projeto usando o JPA (persistence.xml)](src\main\resources\META-INF\persistence.xml)
+    - Nesse arquivo contem configurações da conexão com o Banco de Dados MySQL, como Usuario, Senha, Tipo do Banco de
+      Dados, Driver usado para Conexão. Tambem possui configurações do JPA, como a exibição de Queries e Log.
+- [Classe DAO (Data Acess Object)](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java)
+    - Classe que utiliza de Metodos e outras classes do JPA - como o EntityManager - para manipular os registros no
+      Banco de Dados
+- [Anotações Usando JPA](src\main\java\com\guilhermepalma\exampleJPA\model)
+    - Nas Classes [Product](src\main\java\com\guilhermepalma\exampleJPA\model\Product.java)
+      e [User](src\main\java\com\guilhermepalma\exampleJPA\model\User.java) possuem as anotações Basicas para o
+      Mapeamento das Classes com o JPA
+    - [UserTest](src\test\java\model\UserTest.java): Classe de Teste que implementa manualmente a manipulação de
+      registros no Banco de Dados usando Bibliotecas e Classes do JPA
+    - [ProductTest](src\test\java\model\ProductTest.java): Classe de Teste que utiliza a Classe Generica
+      [DAO](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java) para acessar os metodos configurados para a
+      manipulação de registros no Banco de Dados
+- [Relacionamento OneToOne (1-1)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToOne)
+    - Nas Classes [Client](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToOne\Client.java)
+      e [Position](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToOne\Position.java) contem anotações
+      estrategias do JPA para realizar o Mapeamento de duas Classes que possuem um Relacionamento
+    - [ClientTest](src\test\java\model\relations\oneToOne\ClientTest.java): Classe de Teste que utiliza a Classe
+      Generica [DAO](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java) para acessar os metodos
+      configurados para a manipulação de registros com Relacionamento no Banco de Dados
+- [Relacionamento OneToMany (1-N)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany)
+
+
 ### Padrões de Persitencia
 
 #### Active Record
@@ -80,6 +107,11 @@ Mapeamento Objeto Relacional
             - Sempre que utilizar, é necessario verificar se os dados se manterão consistente.
 - Anotações JPA
     - ``@OneToOne``
+        - ``cascade={CascadeType.____, CascadeType.___, ...}``: Define quais operações será feita em Conjunto das Duas
+          Classes
+            - Usa-se as ``{}`` para informar mais de um Tipo de Cascade
+        - ``mappedBy=nameOfOtherAtribute``: Informa o Nome do Atributo da outra classe que é usado no **Relacionamento
+          Bidirecional**
     - ``@ManyTo Many``:
     - ``@OneToMany``: Uma ``Collections/List`` será associado
     - ``@ManyToOne``

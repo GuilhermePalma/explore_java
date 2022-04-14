@@ -1,3 +1,5 @@
+package model;
+
 import com.guilhermepalma.exampleJPA.model.User;
 
 import javax.persistence.EntityManager;

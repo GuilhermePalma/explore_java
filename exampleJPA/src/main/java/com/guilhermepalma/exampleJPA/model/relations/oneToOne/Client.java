@@ -1,4 +1,4 @@
-package com.guilhermepalma.exampleJPA.model;
+package com.guilhermepalma.exampleJPA.model.relations.oneToOne;
 
 import javax.persistence.*;
 
@@ -12,7 +12,7 @@ public class Client {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "positionID", unique = true)
     private Position position;
 

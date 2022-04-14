@@ -1,3 +1,5 @@
+package model;
+
 import com.guilhermepalma.exampleJPA.model.DAO.DAO;
 import com.guilhermepalma.exampleJPA.model.Product;
 
