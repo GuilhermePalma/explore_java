@@ -137,9 +137,12 @@ Mapeamento Objeto Relacional
     - Quando está trabalhando com a Inserção Manual dos registros nas Tabelas relacionadas, sempre é necessario inserir
       primeiro o registro que a outra tabela depende
 
-<!---
-Classes Model:
-- User: Usado para Testes usando o EntityManagerFactory e EntityManager
-- Product: Usado e implementado para Testes usando o DAO
-- Client e Position: Manipular Relacionamentos
---->
+- Estrategia de Obtenção de Registros
+    - Em Relações ``@OneToOne`` e ``@ManyToOne``, o ``fetch`` padrão é o ``EAGER`` (Obtenção Acelerado)
+    - Em Relações ``@ManyToMany`` e ``@OneToMany``, o ``fetch`` padrão é o ``LAZY`` (Obtenção Tardia)
+    - Ex1: A classe [Order]() possue uma Relação ``@OneToMany`` com a Classe [ItemOrder]() em que os **ItemOrder** serão
+      obtidos somente quando tentar acessa-lo, fazendo uma nova consulta no Banco de Dados.
+        - A Propriedade usada nessa relacionamento é: ``@OneToMany(fetch=FetchType.LAZY)``
+    - Ex2: A classe [ItemOrder]() possui uma Relação ``@ManyToOne`` com a Classe [Product](), levando com que os
+      **Product** sejam obtidos junto ao **ItemOrder**, em uma unica consulta no Banco de Dados (Utiliza do ``JOIN``)
+        - A Propriedade usada nessa relacionamento é: ``@ManyToOne(fetch=FetchType.EAGER)``

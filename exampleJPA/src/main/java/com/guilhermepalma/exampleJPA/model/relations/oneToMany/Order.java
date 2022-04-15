@@ -6,7 +6,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Entity(name = "orders")
 public class Order {
@@ -20,8 +19,11 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    // A Propriedade "mappedBy" é usada para referenciar a variavel da outra classe
-    @OneToMany(mappedBy = "order")
+    /* A Propriedade "mappedBy" é usada para referenciar a variavel da outra classe.
+     * Por padrão, os ItemOrder não são obtidos. Eles só são obtidos quando utiliza do
+     * getItemsOrder() que resulta em uma Segunda Consulta no Banco de Dados.
+     */
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<ItemOrder> itemsOrder;
 
     public Order() {
@@ -59,13 +61,8 @@ public class Order {
     @Override
     public String toString() {
         StringBuilder builderItems = new StringBuilder();
-        itemsOrder.forEach((item -> builderItems.append("\n")
-                .append("  ").append(item.toString())));
+        itemsOrder.forEach((item -> builderItems.append("\n").append("  ").append(item.toString())));
 
-        return "Order{" +
-                "\n id=" + id +
-                ",\n date=" + date.toString() +
-                ",\n itemsOrder=[" + builderItems + "\n ]" +
-                "\n}";
+        return "Order{" + "\n id=" + id + ",\n date=" + date.toString() + ",\n itemsOrder=[" + builderItems + "\n ]" + "\n}";
     }
 }
