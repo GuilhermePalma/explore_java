@@ -1,6 +1,7 @@
-package com.guilhermepalma.exampleJPA.model.relations.oneToMany;
+package com.guilhermepalma.exampleJPA.model.relations.manyToOne;
 
 import com.guilhermepalma.exampleJPA.model.Product;
+import com.guilhermepalma.exampleJPA.model.relations.oneToMany.Order;
 
 import javax.persistence.*;
 

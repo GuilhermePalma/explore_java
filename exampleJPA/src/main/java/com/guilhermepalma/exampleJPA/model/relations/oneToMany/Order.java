@@ -1,5 +1,7 @@
 package com.guilhermepalma.exampleJPA.model.relations.oneToMany;
 
+import com.guilhermepalma.exampleJPA.model.relations.manyToOne.ItemOrder;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.time.ZoneId;

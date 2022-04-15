@@ -27,13 +27,13 @@ Manipular e Gerenciar Tabelas, Registros e Colunas no Banco de Dados MySQL
     - [ClientTest](src\test\java\model\relations\oneToOne\ClientTest.java): Classe de Teste que utiliza a Classe
       Generica [DAO](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java) para acessar os metodos
       configurados para a manipulação de registros com Relacionamento no Banco de Dados
-- [Relacionamento OneToMany (1-N)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany)
+- [Relacionamento OneToMany e ManyToOne (1-N)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany)
     - [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java): Classe que possui uma
       relação Bidirecional com a Classe
-      [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\ItemOrder.java) em uma Relação
+      [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java) em uma Relação
       Many to One. Nessa relação o ItemOrder pode ser relacionado varias vezes a Diferentes Order, mas a Order é unica,
       não podendo ser repetida
-    - [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\ItemOrder.java): Classe que
+    - [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java): Classe que
       possui uma relação Bidirecional com a Classe
       [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java). ESsa relação representa
       um dos varios items que a Order pode ter. Armazena os Dados (Dados do Produto, Preço que foi Vendido, Quantidade,
@@ -140,9 +140,13 @@ Mapeamento Objeto Relacional
 - Estrategia de Obtenção de Registros
     - Em Relações ``@OneToOne`` e ``@ManyToOne``, o ``fetch`` padrão é o ``EAGER`` (Obtenção Acelerado)
     - Em Relações ``@ManyToMany`` e ``@OneToMany``, o ``fetch`` padrão é o ``LAZY`` (Obtenção Tardia)
-    - Ex1: A classe [Order]() possue uma Relação ``@OneToMany`` com a Classe [ItemOrder]() em que os **ItemOrder** serão
-      obtidos somente quando tentar acessa-lo, fazendo uma nova consulta no Banco de Dados.
+    - Ex1: A classe [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java) possue uma
+      Relação ``@OneToMany`` com a Classe
+      [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java) em que os **
+      ItemOrder** serão obtidos somente quando tentar acessa-lo, fazendo uma nova consulta no Banco de Dados.
         - A Propriedade usada nessa relacionamento é: ``@OneToMany(fetch=FetchType.LAZY)``
-    - Ex2: A classe [ItemOrder]() possui uma Relação ``@ManyToOne`` com a Classe [Product](), levando com que os
+    - Ex2: A classe [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java)
+      possui uma Relação ``@ManyToOne`` com a Classe
+      [Product](src\main\java\com\guilhermepalma\exampleJPA\model\Product.java), levando com que os
       **Product** sejam obtidos junto ao **ItemOrder**, em uma unica consulta no Banco de Dados (Utiliza do ``JOIN``)
         - A Propriedade usada nessa relacionamento é: ``@ManyToOne(fetch=FetchType.EAGER)``

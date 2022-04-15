@@ -2,7 +2,7 @@ package model.relations.oneToMany;
 
 import com.guilhermepalma.exampleJPA.model.DAO.DAO;
 import com.guilhermepalma.exampleJPA.model.Product;
-import com.guilhermepalma.exampleJPA.model.relations.oneToMany.ItemOrder;
+import com.guilhermepalma.exampleJPA.model.relations.manyToOne.ItemOrder;
 import com.guilhermepalma.exampleJPA.model.relations.oneToMany.Order;
 
 import java.util.Arrays;
