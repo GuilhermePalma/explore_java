@@ -1,7 +1,5 @@
 package com.guilhermepalma.exampleJPA.model.DAO;
 
-import com.guilhermepalma.exampleJPA.model.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -218,7 +216,6 @@ public class DAO<E> {
         return entityManager.find(referenceClass, id);
     }
 
-
     /**
      * Obtem o Utlimo Registro do Bano de Dados
      *
@@ -228,7 +225,7 @@ public class DAO<E> {
         String jpql = "SELECT e FROM " + referenceClass.getName() + " e ORDER BY e.id DESC";
         TypedQuery<E> query = entityManager.createQuery(jpql, referenceClass);
         query.setMaxResults(1);
-        
+
         return query.getResultList().get(0);
     }
 

@@ -28,7 +28,16 @@ Manipular e Gerenciar Tabelas, Registros e Colunas no Banco de Dados MySQL
       Generica [DAO](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java) para acessar os metodos
       configurados para a manipulação de registros com Relacionamento no Banco de Dados
 - [Relacionamento OneToMany (1-N)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany)
-
+    - [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java): Classe que possui uma
+      relação Bidirecional com a Classe
+      [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\ItemOrder.java) em uma Relação
+      Many to One. Nessa relação o ItemOrder pode ser relacionado varias vezes a Diferentes Order, mas a Order é unica,
+      não podendo ser repetida
+    - [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\ItemOrder.java): Classe que
+      possui uma relação Bidirecional com a Classe
+      [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java). ESsa relação representa
+      um dos varios items que a Order pode ter. Armazena os Dados (Dados do Produto, Preço que foi Vendido, Quantidade,
+      etc) dos Produtos que serão comprados
 
 ### Padrões de Persitencia
 
@@ -69,6 +78,10 @@ Mapeamento Objeto Relacional
         - ``scale=int``: Numeros Permitidos após a virgula (casas decimais)
     - ``@Transient``: Quando a variavel/atributo não será inserida no Banco de Dados
     - ``@Entity``: Define que está relacionada a uma Tabela no Banco de Dados
+    - ``@Temporal``: Define que o dado se trata de uma Data/Horario
+        - ``TemporalType.DATE``: Define uma Data
+        - ``TemporalType.TIME``: Define uma Hora
+        - ``TemporalType.TIMESTAMP``: Define uma Data e Hora
     - Anotações como ``@NotNull`` não são usadas para validar os dados e sim para a criação/gerenciamento de colunas na
       tabela
 - Usando o Arquivo ``persistence.xml`` (JPA)
