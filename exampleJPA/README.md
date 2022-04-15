@@ -38,6 +38,15 @@ Manipular e Gerenciar Tabelas, Registros e Colunas no Banco de Dados MySQL
       [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java). ESsa relação representa
       um dos varios items que a Order pode ter. Armazena os Dados (Dados do Produto, Preço que foi Vendido, Quantidade,
       etc) dos Produtos que serão comprados
+- [Relacionamento ManyToMany (N-N)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany)
+    - As Classes [Uncle](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Uncle.java)
+      e [Nephew](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Nephew.java) representam um
+      Relacionamento Bidirecional Muitos para Muitos, em que o mapeamento desse relacionamento pelo JPA é feito na
+      classe **Uncle**
+        - Os registros dos **Uncles** podem ser associados a um unico ou varios **Nephew**, assim como os **Nephews**
+          podem ser associados a um unico ou varios **Uncle**
+    - [UncleNephewTest](src\test\java\model\relations\manyToMany\UncleNephewTest.java): Executa algumas operações DAO
+      com a Gerencia do Relacionamento Uncle-Nephew feito manualmente
 
 ### Padrões de Persitencia
 
@@ -123,14 +132,14 @@ Mapeamento Objeto Relacional
         - ``cascade={CascadeType.____, CascadeType.___, ...}``: Define quais operações será feita em Conjunto das Duas
           Classes
             - Usa-se as ``{}`` para informar mais de um Tipo de Cascade
-        - ``mappedBy=nameOfOtherAtribute``: Informa o Nome do Atributo da outra classe que é usado no **Relacionamento
-          Bidirecional**
     - ``@ManyTo Many``:
     - ``@OneToMany``: Uma ``Collections/List`` será associado
     - ``@ManyToOne``
     - ``@OneToMany`` e ``@ManyToOne`` indicam uma Relação Bidirecional
         - ``@OneToMany`` representa a "Mãe" do Elemento
         - ``@ManyToOne`` representa o "Filho" do Elemento
+    - ``mappedBy=nameOfOtherAtribute`` (Usado em um dos Relacionamentos Acima): Usado em Relacionamentos Bidirecionais,
+      informando o Nome do Atributo da outra classe em que possui o mapemanto principal do relacionamento
     - ``@JoinColumn``: Define a coluna de Relacionamento de Duas Tabelas
         - ``name=nameOfColumn``: Nome que será aplicado à coluna
         - ``unique=boolean``: Define se o Campo será do Tipo ``Unique`` (Unica)
