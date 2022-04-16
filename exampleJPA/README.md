@@ -165,3 +165,30 @@ Mapeamento Objeto Relacional
       [Product](src/main/java/com/guilhermepalma/exampleJPA/model/Product.java), levando com que os
       **Product** sejam obtidos junto ao **ItemOrder**, em uma unica consulta no Banco de Dados (Utiliza do ``JOIN``)
         - A Propriedade usada nessa relacionamento é: ``@ManyToOne(fetch=FetchType.EAGER)``
+
+### Named Queries
+
+As Named Queries são consultas em SQL (no caso do ``Named Native Query``) ou em JPQL (para ``Named Query``) para obter
+dados do Banco de Dados
+
+- ``Named Query``: Utiliza do JPQL, ou seja, utiliza do Mapeamento do JPA para fazer a criação de uma Query SQL e
+  realizar a consulta no Banco
+    - Como Usar ? (Veja um [Exemplo Aqui: Named Query](src/main/resources/META-INF/persistence.xml))
+        - Criar um arquivo ``.xml`` com a Tag ``entity-mappings``
+        - Criar uma Tag ``named-query`` e dentro da Tag ``query`` escrever a Query em JPQL
+        - Referenciar esse arquivo por meio da Tag ``mapping-file`` dentro da ``persistence-unit``
+        - Inicializar uma ``TypedQuery`` com uma ``EntityManager.createNamedQuery(name, params)``
+        - Inserir os argumentos na ``TypedQuery`` (``query.setParameter(key, value)``)
+        - Obter o Resultado da ``TypedQuery`` com  ``.getResultList()``
+- ``Named Native Query``: Utiliza do SQL Puro, em que é necessario saber o nome exato das tabelas no Banco de Dados.
+    - Como Usar ? (Veja um [Exemplo Aqui: Named Native Query](src/main/resources/META-INF/persistence.xml))
+        - Criar um arquivo ``.xml`` com a Tag ``entity-mappings``
+        - Criar a Tag ``sql-result-set-mapping`` e Configurar a Classe que será Mapeada quando obter o resultado da
+          Consulta SQL
+            - É necessario ter um dos Construtores com a variavel que aramazenará o resultado
+        - Criar uma Tag ``named-native-query``, referenciar o Mapeamento com ``result-set-mapping`` e dentro da Tag
+          ``query`` escrever a Query em SQL
+        - Referenciar esse arquivo por meio da Tag ``mapping-file`` dentro da ``persistence-unit``
+        - Inicializar uma ``TypedQuery`` com uma ``EntityManager.createNamedQuery(name, params)``
+        - Inserir os argumentos na ``TypedQuery`` (``query.setParameter(key, value)``)
+        - Obter o Resultado da ``TypedQuery`` com  ``.getResultList()``

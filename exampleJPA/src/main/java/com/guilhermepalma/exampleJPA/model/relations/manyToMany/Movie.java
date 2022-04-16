@@ -17,6 +17,13 @@ public class Movie {
 
     private Double rating;
 
+    /**
+     * Variavel que não será armazenada no Banco de Dados. Será apenas utilizada apenas para armazenar a Media da
+     * Avaliação dos Filmes
+     */
+    @Transient
+    private Double mediaRating;
+
     /* "joinColumns" = Coluna da Classe responsavel pelo Mapeamento (Movie)
      * "inverseJoinColumns" = Coluna da Classe que possui a segunda parte do Mapeamento (Actor)
      * "referencedColumnName" = Coluna que será usada como Referencia (Ex: Primary Key)
@@ -35,6 +42,10 @@ public class Movie {
         super();
         this.name = name;
         this.rating = rating;
+    }
+
+    public Movie(Double mediaRating) {
+        this.mediaRating = mediaRating;
     }
 
     public Long getId() {
@@ -59,6 +70,14 @@ public class Movie {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public Double getMediaRating() {
+        return mediaRating;
+    }
+
+    public void setMediaRating(Double mediaRating) {
+        this.mediaRating = mediaRating;
     }
 
     public List<Actor> getActorsList() {

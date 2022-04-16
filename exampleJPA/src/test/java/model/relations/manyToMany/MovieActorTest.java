@@ -17,8 +17,9 @@ public class MovieActorTest {
 //        insertMovieActor();
 //        getMovieById();
 //        getActorById();
-        getMovies();
+        //getMovies();
 
+        getMediaRatingMovies();
         movieDAO.close();
     }
 
@@ -80,6 +81,14 @@ public class MovieActorTest {
         } catch (Exception ex) {
             System.out.println("Exception in Get Movie by Rating: \n" + ex.getMessage());
         }
+    }
 
+    private static void getMediaRatingMovies() {
+        try {
+            Movie movie = movieDAO.getOneRecord("mediaRatting");
+            System.out.println("Movies: " + movie.getMediaRating());
+        } catch (Exception ex) {
+            System.out.println("Exception in Get Movie by Rating: \n" + ex.getMessage());
+        }
     }
 }

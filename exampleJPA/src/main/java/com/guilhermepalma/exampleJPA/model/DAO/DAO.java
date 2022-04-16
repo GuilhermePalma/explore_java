@@ -235,7 +235,7 @@ public class DAO<E> {
      * @param nameQuery Nome da Quey que será executada
      * @param params    Paramentros que serão utilizados na Query. Devem ser passados da seguinte forma: A chave e em
      *                  Seguida o Valor (Ex: "key", "value")
-     * @return {@link E Entity}
+     * @return {@link List Entity}
      */
     public List<E> getQuery(String nameQuery, Object... params) {
         // Cria uma Query Tipada (Com a Referencia da Classe da Instancia)
@@ -250,6 +250,21 @@ public class DAO<E> {
 
         // Obtem a Lista de Resultado da Query
         return query.getResultList();
+    }
+
+    /**
+     * Metodo que realiza uma Consulta no Banco de Dados a partir de uma Query Nomeada que retorna apenas um Registro do
+     * Banco de Dados.
+     *
+     * @param nameQuery Nome da Quey que será executada
+     * @param params    Paramentros que serão utilizados na Query. Devem ser passados da seguinte forma: A chave e em
+     *                  Seguida o Valor (Ex: "key", "value")
+     * @return {@link E Entity}
+     * @see #getQuery(String, Object...)
+     */
+    public E getOneRecord(String nameQuery, Object... params) {
+        List<E> list = getQuery(nameQuery, params);
+        return list == null || list.isEmpty() ? null : list.get(0);
     }
 
     /**
