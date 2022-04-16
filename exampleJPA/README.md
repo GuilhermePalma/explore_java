@@ -5,53 +5,53 @@ Manipular e Gerenciar Tabelas, Registros e Colunas no Banco de Dados MySQL
 
 ## Estrutura do Projeto
 
-- [Configurações do Projeto usando o JPA (persistence.xml)](src\main\resources\META-INF\persistence.xml)
+- [Configurações do Projeto usando o JPA (persistence.xml)](src/main/resources/META-INF/persistence.xml)
     - Nesse arquivo contem configurações da conexão com o Banco de Dados MySQL, como Usuario, Senha, Tipo do Banco de
       Dados, Driver usado para Conexão. Tambem possui configurações do JPA, como a exibição de Queries e Log.
-- [Classe DAO (Data Acess Object)](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java)
+- [Classe DAO (Data Acess Object)](src/main/java/com/guilhermepalma/exampleJPA/model/DAO/DAO.java)
     - Classe que utiliza de Metodos e outras classes do JPA - como o EntityManager - para manipular os registros no
       Banco de Dados
-- [Anotações Usando JPA](src\main\java\com\guilhermepalma\exampleJPA\model)
-    - Nas Classes [Product](src\main\java\com\guilhermepalma\exampleJPA\model\Product.java)
-      e [User](src\main\java\com\guilhermepalma\exampleJPA\model\User.java) possuem as anotações Basicas para o
+- [Anotações Usando JPA](src/main/java/com/guilhermepalma/exampleJPA/model)
+    - Nas Classes [Product](src/main/java/com/guilhermepalma/exampleJPA/model/Product.java)
+      e [User](src/main/java/com/guilhermepalma/exampleJPA/model/User.java) possuem as anotações Basicas para o
       Mapeamento das Classes com o JPA
-    - [UserTest](src\test\java\model\UserTest.java): Classe de Teste que implementa manualmente a manipulação de
+    - [UserTest](src/test/java/model/UserTest.java): Classe de Teste que implementa manualmente a manipulação de
       registros no Banco de Dados usando Bibliotecas e Classes do JPA
-    - [ProductTest](src\test\java\model\ProductTest.java): Classe de Teste que utiliza a Classe Generica
-      [DAO](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java) para acessar os metodos configurados para a
+    - [ProductTest](src/test/java/model/ProductTest.java): Classe de Teste que utiliza a Classe Generica
+      [DAO](src/main/java/com/guilhermepalma/exampleJPA/model/DAO/DAO.java) para acessar os metodos configurados para a
       manipulação de registros no Banco de Dados
-- [Relacionamento OneToOne (1-1)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToOne)
-    - Nas Classes [Client](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToOne\Client.java)
-      e [Position](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToOne\Position.java) contem anotações
+- [Relacionamento OneToOne (1-1)](src/main/java/com/guilhermepalma/exampleJPA/model/relations/oneToOne)
+    - Nas Classes [Client](src/main/java/com/guilhermepalma/exampleJPA/model/relations/oneToOne/Client.java)
+      e [Position](src/main/java/com/guilhermepalma/exampleJPA/model/relations/oneToOne/Position.java) contem anotações
       estrategias do JPA para realizar o Mapeamento de duas Classes que possuem um Relacionamento
-    - [ClientTest](src\test\java\model\relations\oneToOne\ClientTest.java): Classe de Teste que utiliza a Classe
-      Generica [DAO](src\main\java\com\guilhermepalma\exampleJPA\model\DAO\DAO.java) para acessar os metodos
+    - [ClientTest](src/test/java/model/relations/oneToOne/ClientTest.java): Classe de Teste que utiliza a Classe
+      Generica [DAO](src/main/java/com/guilhermepalma/exampleJPA/model/DAO/DAO.java) para acessar os metodos
       configurados para a manipulação de registros com Relacionamento no Banco de Dados
-- [Relacionamento OneToMany e ManyToOne (1-N)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany)
-    - [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java): Classe que possui uma
+- [Relacionamento OneToMany e ManyToOne (1-N)](src/main/java/com/guilhermepalma/exampleJPA/model/relations/oneToMany)
+    - [Order](src/main/java/com/guilhermepalma/exampleJPA/model/relations/oneToMany/Order.java): Classe que possui uma
       relação Bidirecional com a Classe
-      [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java) em uma Relação
+      [ItemOrder](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToOne/ItemOrder.java) em uma Relação
       Many to One. Nessa relação o ItemOrder pode ser relacionado varias vezes a Diferentes Order, mas a Order é unica,
       não podendo ser repetida
-    - [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java): Classe que
+    - [ItemOrder](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToOne/ItemOrder.java): Classe que
       possui uma relação Bidirecional com a Classe
-      [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java). ESsa relação representa
+      [Order](src/main/java/com/guilhermepalma/exampleJPA/model/relations/oneToMany/Order.java). ESsa relação representa
       um dos varios items que a Order pode ter. Armazena os Dados (Dados do Produto, Preço que foi Vendido, Quantidade,
       etc) dos Produtos que serão comprados
-- [Relacionamento ManyToMany (N-N)](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany)
-    - As Classes [Uncle](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Uncle.java)
-      e [Nephew](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Nephew.java) representam um
+- [Relacionamento ManyToMany (N-N)](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToMany)
+    - As Classes [Uncle](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToMany/Uncle.java)
+      e [Nephew](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToMany/Nephew.java) representam um
       Relacionamento Bidirecional Muitos para Muitos, em que o mapeamento desse relacionamento pelo JPA é feito na
       classe **Uncle**
         - Os registros dos **Uncles** podem ser associados a um unico ou varios **Nephew**, assim como os **Nephews**
           podem ser associados a um unico ou varios **Uncle**
-    - [UncleNephewTest](src\test\java\model\relations\manyToMany\UncleNephewTest.java): Executa algumas operações DAO
+    - [UncleNephewTest](src/test/java/model/relations/manyToMany/UncleNephewTest.java): Executa algumas operações DAO
       com a Gerencia do Relacionamento Uncle-Nephew feito manualmente
-    - As Classes [Movie](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Movie.java)
-      e [Actor](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Actor.java) possuem um
+    - As Classes [Movie](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToMany/Movie.java)
+      e [Actor](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToMany/Actor.java) possuem um
       Relacionamento Bidirecional Muitos para Muitos que seguem a mesma Logica que as
-      Classes [Uncle](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Uncle.java)
-      e [Nephew](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Nephew.java), mas adicionando
+      Classes [Uncle](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToMany/Uncle.java)
+      e [Nephew](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToMany/Nephew.java), mas adicionando
       novos mapeamentos das Tabelas e Relacionamentos no Banco de Dados
 
 ### Padrões de Persitencia
@@ -155,13 +155,13 @@ Mapeamento Objeto Relacional
 - Estrategia de Obtenção de Registros
     - Em Relações ``@OneToOne`` e ``@ManyToOne``, o ``fetch`` padrão é o ``EAGER`` (Obtenção Acelerado)
     - Em Relações ``@ManyToMany`` e ``@OneToMany``, o ``fetch`` padrão é o ``LAZY`` (Obtenção Tardia)
-    - Ex1: A classe [Order](src\main\java\com\guilhermepalma\exampleJPA\model\relations\oneToMany\Order.java) possue uma
+    - Ex1: A classe [Order](src/main/java/com/guilhermepalma/exampleJPA/model/relations/oneToMany/Order.java) possue uma
       Relação ``@OneToMany`` com a Classe
-      [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java) em que os **
+      [ItemOrder](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToOne/ItemOrder.java) em que os **
       ItemOrder** serão obtidos somente quando tentar acessa-lo, fazendo uma nova consulta no Banco de Dados.
         - A Propriedade usada nessa relacionamento é: ``@OneToMany(fetch=FetchType.LAZY)``
-    - Ex2: A classe [ItemOrder](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToOne\ItemOrder.java)
+    - Ex2: A classe [ItemOrder](src/main/java/com/guilhermepalma/exampleJPA/model/relations/manyToOne/ItemOrder.java)
       possui uma Relação ``@ManyToOne`` com a Classe
-      [Product](src\main\java\com\guilhermepalma\exampleJPA\model\Product.java), levando com que os
+      [Product](src/main/java/com/guilhermepalma/exampleJPA/model/Product.java), levando com que os
       **Product** sejam obtidos junto ao **ItemOrder**, em uma unica consulta no Banco de Dados (Utiliza do ``JOIN``)
         - A Propriedade usada nessa relacionamento é: ``@ManyToOne(fetch=FetchType.EAGER)``
