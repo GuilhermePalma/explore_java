@@ -147,8 +147,15 @@ Mapeamento Objeto Relacional
     - ``mappedBy=nameOfOtherAtribute`` (Usado em um dos Relacionamentos Acima): Usado em Relacionamentos Bidirecionais,
       informando o Nome do Atributo da outra classe em que possui o mapemanto principal do relacionamento
     - ``@JoinColumn``: Define a coluna de Relacionamento de Duas Tabelas
-        - ``name=nameOfColumn``: Nome que será aplicado à coluna
+        - ``name=nameOfColumn``: Nome que será aplicado à Coluna no Banco de Dados
         - ``unique=boolean``: Define se o Campo será do Tipo ``Unique`` (Unica)
+        - ``referencedColumnName=nameOfVariable``: Coluna que será usada como Referencia (Ex: ``Primary Key/ID``)
+        - ``name=nameInDatabase`` = Nome que será aplicado à coluna da Tabela
+    - ``@JoinTable``
+        - ``joinColumns=@JoinColumn``: Representa a Coluna da Classe responsavel pelo Mapeamento (Normalmente usado em
+          Relações ``@ManyToMany``)
+        - ``inverseJoinColumns=@JoinColumn``: Representa a coluna da Classe que possui a segunda parte do Mapeamento,
+          normalmente utiliza em Relações ``@ManyToMany``, no lado que recebe o atributo ``mappedBy``
     - Quando está trabalhando com a Inserção Manual dos registros nas Tabelas relacionadas, sempre é necessario inserir
       primeiro o registro que a outra tabela depende
 
