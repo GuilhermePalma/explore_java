@@ -47,6 +47,12 @@ Manipular e Gerenciar Tabelas, Registros e Colunas no Banco de Dados MySQL
           podem ser associados a um unico ou varios **Uncle**
     - [UncleNephewTest](src\test\java\model\relations\manyToMany\UncleNephewTest.java): Executa algumas operações DAO
       com a Gerencia do Relacionamento Uncle-Nephew feito manualmente
+    - As Classes [Movie](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Movie.java)
+      e [Actor](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Actor.java) possuem um
+      Relacionamento Bidirecional Muitos para Muitos que seguem a mesma Logica que as
+      Classes [Uncle](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Uncle.java)
+      e [Nephew](src\main\java\com\guilhermepalma\exampleJPA\model\relations\manyToMany\Nephew.java), mas adicionando
+      novos mapeamentos das Tabelas e Relacionamentos no Banco de Dados
 
 ### Padrões de Persitencia
 
