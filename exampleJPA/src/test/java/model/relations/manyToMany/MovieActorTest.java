@@ -5,17 +5,21 @@ import com.guilhermepalma.exampleJPA.model.relations.manyToMany.Actor;
 import com.guilhermepalma.exampleJPA.model.relations.manyToMany.Movie;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MovieActorTest {
 
-    private static final DAO<Object> genericDAO = new DAO<>();
+    private static DAO<Movie> movieDAO;
 
     public static void main(String[] args) {
-        insertMovieActor();
-        getMovieById();
-        getActorById();
+        movieDAO = new DAO<>(Movie.class);
 
-        genericDAO.close();
+//        insertMovieActor();
+//        getMovieById();
+//        getActorById();
+        getMovies();
+
+        movieDAO.close();
     }
 
     /**
@@ -35,9 +39,9 @@ public class MovieActorTest {
             movieTwo.addActors(Arrays.asList(actorMarie, actorJohn, actorEva));
             movieThree.addActor(actorEva);
 
-            genericDAO.registerAtomic(movieOne);
-            genericDAO.registerAtomic(movieTwo);
-            genericDAO.registerAtomic(movieThree);
+            movieDAO.registerAtomic(movieOne);
+            movieDAO.registerAtomic(movieTwo);
+            movieDAO.registerAtomic(movieThree);
         } catch (Exception ex) {
             System.out.println("Exception in Insert Movie/Actor: \n" + ex.getMessage());
         }
@@ -50,7 +54,7 @@ public class MovieActorTest {
         try {
             System.out.println(new DAO<>(Movie.class).getRegiterById(2L).toStringWithActors());
         } catch (Exception ex) {
-            System.out.println("Exception in Get Uncle by ID: \n" + ex.getMessage());
+            System.out.println("Exception in Get Movie by ID: \n" + ex.getMessage());
         }
     }
 
@@ -61,7 +65,21 @@ public class MovieActorTest {
         try {
             System.out.println(new DAO<>(Actor.class).getRegiterById(3L).toStringWithMovies());
         } catch (Exception ex) {
-            System.out.println("Exception in Get Uncle by ID: \n" + ex.getMessage());
+            System.out.println("Exception in Get Actor by ID: \n" + ex.getMessage());
         }
+    }
+
+    private static void getMovies() {
+        try {
+            List<Movie> moviesList = movieDAO.getQuery("moviesRattinGratterOf", "rating", 9.0);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            moviesList.forEach(movie -> stringBuilder.append(movie.toStringWithActors()).append("\n"));
+
+            System.out.println("Movies:\n" + stringBuilder);
+        } catch (Exception ex) {
+            System.out.println("Exception in Get Movie by Rating: \n" + ex.getMessage());
+        }
+
     }
 }

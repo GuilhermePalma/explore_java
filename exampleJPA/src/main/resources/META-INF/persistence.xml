@@ -6,10 +6,13 @@
     <persistence-unit name="example_jpa">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <mapping-file>META-INF/searches.xml</mapping-file>
+
         <properties>
             <!-- Define as Propriedades de Conexão com o Banco de Dados -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/example_jpa?useTimezone=true&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/example_jpa?useTimezone=true&amp;serverTimezone=UTC"/>
             <property name="javax.persistence.jdbc.user" value="admin"/>
             <property name="javax.persistence.jdbc.password" value="admin"/>
 

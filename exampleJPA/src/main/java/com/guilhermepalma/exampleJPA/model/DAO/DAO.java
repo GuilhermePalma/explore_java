@@ -230,6 +230,29 @@ public class DAO<E> {
     }
 
     /**
+     * Metodo que realiza uma Consulta no Banco de Dados a partir de uma Query Nomeada.
+     *
+     * @param nameQuery Nome da Quey que será executada
+     * @param params    Paramentros que serão utilizados na Query. Devem ser passados da seguinte forma: A chave e em
+     *                  Seguida o Valor (Ex: "key", "value")
+     * @return {@link E Entity}
+     */
+    public List<E> getQuery(String nameQuery, Object... params) {
+        // Cria uma Query Tipada (Com a Referencia da Classe da Instancia)
+        TypedQuery<E> query = entityManager.createNamedQuery(nameQuery, referenceClass);
+
+        // Percorre de 2 em 2 (Obtem a Chave e Valor)
+        for (int i = 0; i < params.length; i += 2) {
+            String key = params[i].toString();
+            Object value = params[i + 1];
+            query.setParameter(key, value);
+        }
+
+        // Obtem a Lista de Resultado da Query
+        return query.getResultList();
+    }
+
+    /**
      * Responsavel por Fechar a Conexão do EntityManager utilizado
      */
     public void close() {
