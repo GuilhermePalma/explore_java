@@ -16,3 +16,4 @@ projetos dependam um do outro.
 - ``exports name.of.package;``: Exporta o ``Package`` com o Nome Informado (Substituir no ``name.of.package``)
 - ``requires nameAplication;``: Representa que a Aplicação depende de um ``Package/Aplicação`` Informado (Substituir
   no ``nameAplication``)
+- ``transitive``: Evita com que aconteça erros ao passar Dependencias de outros Modulos para outra Aplicação

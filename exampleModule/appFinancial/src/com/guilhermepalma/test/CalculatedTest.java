@@ -7,8 +7,10 @@ import com.guilhermepalma.appCalculate.Calculate;
  */
 public class CalculatedTest {
     public static void main(String[] args) {
-        // Acessa a Classe "Calculate" do Projeto appCalculate
+        // Acessa a Classe "Calculate" do Projeto appCalculate para Calcular
         Calculate calculate = new Calculate();
-        System.out.println(calculate.sum(3, 5, 9));
+
+        // Acessa a Classe "Logger" do Projeto appLog para Imprimir o Resultado
+        calculate.printMessage(String.valueOf(calculate.sum(3, 5, 9)));
     }
 }
