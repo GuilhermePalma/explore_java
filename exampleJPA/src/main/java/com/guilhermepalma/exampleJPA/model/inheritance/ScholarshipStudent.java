@@ -1,8 +1,10 @@
 package com.guilhermepalma.exampleJPA.model.inheritance;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("ST_SS")
 public class ScholarshipStudent extends Student {
 
     private Double valueScholarship;

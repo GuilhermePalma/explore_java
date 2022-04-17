@@ -213,12 +213,29 @@ dados do Banco de Dados
       ``@Inheritance(strategy = InheritanceType.SINGLE_TABLE)``
         - Os atributos das classes Pais e Filhas são agrupados em uma unica Tabela, criando diversos campos opcionais
           que ficarão marcados como ``null``
-        - Para Classes Pais marcadas com ``@Inheritance`` e ``strategy = InheritanceType.SINGLE_TABLE``:
-            - É necessario usar o ``@DiscriminatorColumn`` na Classe Pai para diferenciar a Instância de Classe que o
-              JPA irá inserir no Banco de Dados. Para isso, é necessario definir os seguintes Atributos no
-              ``@DiscriminatorColumn``
-                - ``name=nameOfColumn``: Nome da Coluna
-                - ``length=int``: Tamanho da Coluna
-                - ``discriminatorType=DiscriminatorType...``: Tipo de Dado que será aplicado na Coluna
-            - É necessario definir a Propriedade ``@DiscriminatorValue(value)``, com o ``value`` seguindo os atributos
-              definidos no ``@DiscriminatorColumn``
+        - É necessario aplicar o Processo do [@DiscriminatorColumn](#-configurando-o-DiscriminatorColumn) para
+          Identificar as Instancias das Diferentes Classes
+    - ``strategy = InheritanceType.JOINED``
+        - Nessa Estrategia, será criada uma Tabela Geral que contenha os Campos Comuns
+        - Tambem é criado tabelas secundarias, que contem as informações implementadas nas classes que Herdaram da
+          Classe Pai. A relação será feita a partir do relacionamento da ``Primary Key`` da Tabela Geral, com
+          uma ``Foreing Key`` da Tabela Secundaria com as demais informações
+        - É necessario aplicar o Processo do [@DiscriminatorColumn](#-configurando-o-DiscriminatorColumn) para Fazer a
+          Separação das Tabelas conforme as Diferentes Classes
+
+#### Configurando o DiscriminatorColumn
+
+- Inserir o ``@DiscriminatorColumn`` na Classe Pai definindo os seguintes Atributos
+    - ``name=nameOfColumn``: Nome da Coluna
+    - ``length=int``: Tamanho da Coluna
+    - ``discriminatorType=DiscriminatorType...``: Tipo de Dado que será aplicado na Coluna
+- Definir a Propriedade ``@DiscriminatorValue(value)``, com o ``value`` seguindo os atributos definido no
+  ``@DiscriminatorColumn``
+
+
+
+
+
+
+
+
