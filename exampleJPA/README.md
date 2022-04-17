@@ -97,6 +97,8 @@ Mapeamento Objeto Relacional
         - ``TemporalType.DATE``: Define uma Data
         - ``TemporalType.TIME``: Define uma Hora
         - ``TemporalType.TIMESTAMP``: Define uma Data e Hora
+    - ``@Embeddable``: Define colunas Comuns em Outras Tabelas, mas sem representar um relacionamento, e sim a inserção
+      direta dos atributos como atributos da outra Tabelas
     - Anotações como ``@NotNull`` não são usadas para validar os dados e sim para a criação/gerenciamento de colunas na
       tabela
 - Usando o Arquivo ``persistence.xml`` (JPA)
