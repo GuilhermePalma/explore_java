@@ -1,17 +1,18 @@
 # Modularidade (JDK 9)
 
-Esse conceito introduz o conceito de Modulos que permite uma melhor gerencia do encapsulamento das Classes (``default``
-, ``private``, ``protected`` e ``public``)
+Esse conceito introduz o conceito de Modulos que permite uma melhor gerência do encapsulamento das Classes (``default``
+, ``private``, ``protected`` e ``public``). Nesse gerenciamento, é possivel definir quais Pacotes (``Packages``) serão
+compartilhados com outras aplicações. Esse conceito foi introduzido no JDK 9 e evita erros de **Dependencias Ciclicas**
+(A interdependencia de Modulos de diferentes Projetos).
 
-Permite com que uma aplicação tenha uma dependencia com um pacote dentro de outra aplicação
+## Aplicando a Modularidade (module-info)
 
-## Sistema de Modulos
+Por padrão as classes ficarão definidas com internas do Proprio Projeto, não permitindo o acesso externo. Ao criar o
+arquivo ``module-info.java`` é possivel controlar quais pacotes serão importados e exportados de um determinado Projeto.
 
-Por padrão as classes ficarão definidos com internos do proprio projeto, não permitindo o acesso externo
+Nesse arquivo, não é possivel inserir uma lógica que irá criar uma dependencia ciclica, isto é, não será possivel que os
+projetos dependam um do outro.
 
-Evita a Dependencia Ciclica de Modulos (Modulos de Diferentes Projetos que um depende do outro)
-
-O arquivo ``module-info.java`` controla os modulos do Projeto. Ele pode definir:
-
-- A Visibilidade dos Pactoes para que Projetos externos acessem
-
+- ``exports name.of.package;``: Exporta o ``Package`` com o Nome Informado (Substituir no ``name.of.package``)
+- ``requires nameAplication;``: Representa que a Aplicação depende de um ``Package/Aplicação`` Informado (Substituir
+  no ``nameAplication``)
