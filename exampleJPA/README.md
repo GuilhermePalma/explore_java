@@ -1,4 +1,4 @@
-# Persistencia de Dados
+# Persistencia de Dados - JPA
 
 Projeto ``exmapleJPA``: Projeto Pratico das Diferentes abordagens utilizando o Java Persistence API (JPA) para Mapear,
 Manipular e Gerenciar Tabelas, Registros e Colunas no Banco de Dados MySQL
@@ -209,14 +209,16 @@ dados do Banco de Dados
         - Cria Tabelas para cada Classes Concreta, mantendo de Fora as Classes Abstratas (Contem os Dados Generalizados)
         - Nesse Caso ocorreria Campos Duplicados nas Tabelas (Ex: varios campos ``name`` em diferentes Tabelas)
         - Uma maior separação e especificação dos Campos nas Tabelas
-        - Exemplo no Commit: [8f74546](https://github.com/GuilhermePalma/explore_java/commit/8f74546934edd35d8b1543843f72e4087f4cb988)
+        - Exemplo no
+          Commit: [8f74546](https://github.com/GuilhermePalma/explore_java/commit/8f74546934edd35d8b1543843f72e4087f4cb988)
     - Não marcar a Classe que Herda com o ``@Inheritance`` ou marcar com
       ``@Inheritance(strategy = InheritanceType.SINGLE_TABLE)``
         - Os atributos das classes Pais e Filhas são agrupados em uma unica Tabela, criando diversos campos opcionais
           que ficarão marcados como ``null``
         - É necessario aplicar o Processo do [@DiscriminatorColumn](#configurando-o-DiscriminatorColumn) para
           Identificar as Instancias das Diferentes Classes
-        - Exemplo no Commit: [10b60c6](https://github.com/GuilhermePalma/explore_java/commit/10b60c6c00c64cf1c108d1db7989176871ff8411)
+        - Exemplo no
+          Commit: [10b60c6](https://github.com/GuilhermePalma/explore_java/commit/10b60c6c00c64cf1c108d1db7989176871ff8411)
     - ``strategy = InheritanceType.JOINED``
         - Nessa Estrategia, será criada uma Tabela Geral que contenha os Campos Comuns
         - Tambem é criado tabelas secundarias, que contem as informações implementadas nas classes que Herdaram da
@@ -224,13 +226,16 @@ dados do Banco de Dados
           uma ``Foreing Key`` da Tabela Secundaria com as demais informações
         - É necessario aplicar o Processo do [@DiscriminatorColumn](#configurando-o-DiscriminatorColumn) para Fazer a
           Separação das Tabelas conforme as Diferentes Classes
-        - Exemplo no Commit: [82c6951](https://github.com/GuilhermePalma/explore_java/commit/82c69515925f1157a24ac9de7c29f29f0cf27298)
+        - Exemplo no
+          Commit: [82c6951](https://github.com/GuilhermePalma/explore_java/commit/82c69515925f1157a24ac9de7c29f29f0cf27298)
+
+> Ao Testar cada Estrategia de Herança, pode ocorrer erros ao criar a Tabela. Para isso, exclua as Tabelas da Herança criadas nas versões anteriores
 
 #### Configurando o DiscriminatorColumn
 
 - Inserir o ``@DiscriminatorColumn`` na Classe Pai definindo os seguintes Atributos
     - ``name=nameOfColumn``: Nome da Coluna
     - ``length=int``: Tamanho da Coluna
-    - ``discriminatorType=DiscriminatorType...``: Tipo de Dado que será aplicado na Coluna
+    - ``discriminatorType=DiscriminatorType.___``: Tipo de Dado que será aplicado na Coluna
 - Definir a Propriedade ``@DiscriminatorValue(value)``, com o ``value`` seguindo os atributos definido no
   ``@DiscriminatorColumn``
