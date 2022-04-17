@@ -18,8 +18,8 @@ public class InheritancedStudentsTest {
     }
 
     private static void insertScholarshipStudent() {
-        Student student = new Student(1L, "Jão Roverto");
-        ScholarshipStudent scholarshipStudent = new ScholarshipStudent(2L, "Luana Rui", 1000.0);
+        Student student = new Student(3L, "Ruim Lui");
+        ScholarshipStudent scholarshipStudent = new ScholarshipStudent(4L, "Vinuas Kane", 100.0);
 
         studentDAO.registerAtomic(student);
         studentDAO.registerAtomic(scholarshipStudent);

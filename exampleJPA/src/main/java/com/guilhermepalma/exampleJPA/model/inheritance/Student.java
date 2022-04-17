@@ -1,11 +1,12 @@
 package com.guilhermepalma.exampleJPA.model.inheritance;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", length = 2, discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("ST")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Student {
 
     @Id

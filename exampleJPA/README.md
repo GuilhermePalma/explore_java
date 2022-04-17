@@ -204,12 +204,16 @@ dados do Banco de Dados
 
 ### Herança no Mapeamento do JPA
 
-- Estrategias para Mapear Herança usando o JPA (Implementar na Classe marcada como ``@Inheritance``):
-    - Não marcar a Classe que Herda com o ``@Inheritance`` ou marcar a Classe Pai com
+- Estrategias para Mapear Herança usando o JPA (Implementar na Classe Pai ``@Inheritance``):
+    - ``strategy = InheritanceType.TABLE_PER_CLASS``
+        - Cria Tabelas para cada Classes Concreta, mantendo de Fora as Classes Abstratas (Contem os Dados Generalizados)
+        - Nesse Caso ocorreria Campos Duplicados nas Tabelas (Ex: varios campos ``name`` em diferentes Tabelas)
+        - Uma maior separação e especificação dos Campos nas Tabelas
+    - Não marcar a Classe que Herda com o ``@Inheritance`` ou marcar com
       ``@Inheritance(strategy = InheritanceType.SINGLE_TABLE)``
         - Os atributos das classes Pais e Filhas são agrupados em uma unica Tabela, criando diversos campos opcionais
           que ficarão marcados como ``null``
-        - Para classes marcadas com ``@Inheritance`` e ``strategy = InheritanceType.SINGLE_TABLE``:
+        - Para Classes Pais marcadas com ``@Inheritance`` e ``strategy = InheritanceType.SINGLE_TABLE``:
             - É necessario usar o ``@DiscriminatorColumn`` na Classe Pai para diferenciar a Instância de Classe que o
               JPA irá inserir no Banco de Dados. Para isso, é necessario definir os seguintes Atributos no
               ``@DiscriminatorColumn``
@@ -218,7 +222,3 @@ dados do Banco de Dados
                 - ``discriminatorType=DiscriminatorType...``: Tipo de Dado que será aplicado na Coluna
             - É necessario definir a Propriedade ``@DiscriminatorValue(value)``, com o ``value`` seguindo os atributos
               definidos no ``@DiscriminatorColumn``
-    - ``strategy = InheritanceType.TABLE_PER_CLASS``
-        - Cria Tabelas para cada Classes Concreta, mantendo de Fora as Classes Abstratas (Contem os Dados Generalizados)
-        - Nesse Caso ocorreria Campos Duplicados nas Tabelas (Ex: varios campos ``name`` em diferentes Tabelas)
-        - Uma maior separação e especificação dos Campos nas Tabelas
