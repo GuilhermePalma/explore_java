@@ -51,6 +51,8 @@ Aplicação, permitindo que através de anotações crie-se endpoints para requi
 
 - ``@RestController``: Define que a Classe se Trata de um Controller REST API
 - ``@RequestMapping``: Faz o Mapeamento de uma Requisição HTTP (Utilizando a URL)
-    - ``method=RequestMethod.___``: Metodo HTTP utilizado na Requisição. Por padrõa o Metodo HTTP é o ``GET``
+    - ``@RequestMapping(nameOfPath)``: É possivel passar o ``path`` (caminho) da requisição diretamente na Construção
+      do ``@RequestMapping``
     - ``path=urlForRequest``: Define a partir de qual Fragmento de URL será chamado o Metodo
+    - ``method=RequestMethod.___``: Metodo HTTP utilizado na Requisição. Por padrõa o Metodo HTTP é o ``GET``
 - ``@GetMapping``: Faz o Mapeamento da URL utilizando o Metodo ``GET``
