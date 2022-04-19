@@ -55,3 +55,43 @@
   de requisições e respostas, enquanto o ``Service`` faz a manipulação dos dados, operações no banco de dados e cuida
   das regras de negócio
     - Essa separação de responsabilidade, facilita a manutenção do codigo
+
+### Web Services
+
+- SOAP
+    - WSDL: Descreve como a disponibilizaçãodo Web Service (Quais as Funções, Parametros e Retornos)
+    - Segue o Modelo RPC (Remote Procedure Call)
+    - Modelo mais burocratico para utilizar
+- REST
+    - Normalmente os dados são tratados no Formato JSON
+    - Usa HTTP Puro (Usa URLs para Requisições)
+    - Ao seguir a conveção e restrições estruturais, o serviço se torna REST Full
+    - Conveções RESTful
+        - Normalmente possui uma URL Base (Estatica) + Continuação do Recurso que será usado
+            - Ex: ``urlbase.com/clientes``, ``urlbase.com/clientes/36``
+        - Metodo HTTP (POST, GET, DELETE, etc)
+        - Possui uma Descrição desse Endpoint (URL Especifica + Metodo HTTP + Envio de Parametros)
+
+#### Arquiteturas de Serviços
+
+- SOA
+    - Varios Serviços instalados um ESB (Enterprise Service Bus)
+        - É possivel orquestrar/organizar uma Logica para utilziar os Serviços Instalados
+    - Mais facil de ter uma comunicação entre os Serviços
+
+<br/>
+
+- Microsserviços:
+    - Quebrar a aplicação em partes menores para que cada Web Service faça uma parte e tenha as suas responsabilidades
+    - Mais simples de Escalar Serviços
+
+### Computação em Nuvem
+
+- Inspirado nos Serviços Utiliarios Cotidianos (Ex: Agua, Luz, etc), em que se paga o que se utiliza de Infraestrutura
+    - Antes era utilizado Estruturas Dimensionadas e Limitadas, em que era implantado um serviço de grande cobertura,
+      mas que na maioria do tempo ficava ocioso
+    - Inicialmente era comprado uma Estrutura para Hospedagem do Serviço, depois fui utilizado o esquema de "aluguel" de
+      máquinas, depois evoluiu para utilização de Máquinas Virtuais
+- Pagamento pelo Uso (Seja por Tempo ou Espaço)
+    - Permite o Escalonamento Automatico: Permite Expandir ou Diminuir a Infraestrutura
+        - Permite criar Condições Lineares (Para crescimento ou diminuição) para esse Processo
