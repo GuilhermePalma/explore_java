@@ -36,3 +36,21 @@ Os Arquivos sempre estarão dentro da pasta ``src``, se subdividindo em:
     - Consulta um Repositorio Online com as Dependencias
     - Normalmente são arquivos ``.jar``
     - Responsavel por Ler o arquivo ``pom.xml``, acessar o Repositorio Online e Baixar as Dependencias
+
+### Criando Web Service
+
+A partir do **Spring Bot** é possivel poupar muito Trabalho de Configuração e Logica de Codigo para a criação de uma
+Aplicação, permitindo que através de anotações crie-se endpoints para requisições.
+
+- Erros Comuns
+    - Só é possivel ter uma Mesma URL para Metodos Diferentes caso o Metodo HTTP seja diferente (Ex: Em um metodo é
+      utilizado o ``GET`` e em outro é usado o ``POST``). Caso contrario, a aplicação irá exibir um erro
+    - Requisição utilizando um Metodo Invalido (Ex: Requisição ``GET`` para um Metodo ``POST``)
+
+#### Anotações
+
+- ``@RestController``: Define que a Classe se Trata de um Controller REST API
+- ``@RequestMapping``: Faz o Mapeamento de uma Requisição HTTP (Utilizando a URL)
+    - ``method=RequestMethod.___``: Metodo HTTP utilizado na Requisição. Por padrõa o Metodo HTTP é o ``GET``
+    - ``path=urlForRequest``: Define a partir de qual Fragmento de URL será chamado o Metodo
+- ``@GetMapping``: Faz o Mapeamento da URL utilizando o Metodo ``GET``
