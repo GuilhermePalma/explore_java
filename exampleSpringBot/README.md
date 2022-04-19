@@ -56,3 +56,7 @@ Aplicação, permitindo que através de anotações crie-se endpoints para requi
     - ``path=urlForRequest``: Define a partir de qual Fragmento de URL será chamado o Metodo
     - ``method=RequestMethod.___``: Metodo HTTP utilizado na Requisição. Por padrõa o Metodo HTTP é o ``GET``
 - ``@GetMapping``: Faz o Mapeamento da URL utilizando o Metodo ``GET``
+- `@PathVariable`: Obtem o Parametro/Valor passado na URL
+    - Ex: `baseUrl.com/endpoint/valuePathVariable`
+- `@RequestParam`: Obtem um Parametro Atraves de um Parametro da Requisição na URL
+    - Ex: `baseUrl.com/endpoint?requestParam=valueOfRequest`
