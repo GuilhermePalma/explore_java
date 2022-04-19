@@ -1,8 +1,10 @@
 ### Spring Bot
 
-- Permite que crie aplicações stand-alone
+- Alternativa para Utilizar em Serviços Empresariais (Autenticação, Persistencia, etc)
+- Permite que crie aplicações Stand-Alone: Aplicação é Inicializada pelo Metodo ``main``
+    - Não demanda de Configurações de Servidores
     - Permite que a aplicação seja executada apenas pelo JDK
-    - Facilita a criação de ``Containers`` por centralizar a parte executavel
+    - Facilita a Criação de ``Containers`` por centralizar a parte executavel
 - Web Container
     - Tomcat, Jetty Undertow: Onde as aplicações Java são executadas
     - Não é necessario gerar arquivos ``WAR``, o Spring Bot já faz o deploy no servidor
@@ -18,7 +20,7 @@
 
 - Spring Boot DevTools: Conjuntos de Ferramentas para o Desenvolvimento do Projeto, como o LiveReload (Carregar
   alterações de forma rapida e simples)
-- Spring Web: Conjuntos de Ferramentas utilizadas para o Desenvolvimento Web
+- Spring Web: Conjuntos de Ferramentas utilizadas para o Desenvolvimento Web de Web Servicesc
 - Spring Boot Actuator: Permite monitar a aplicação Java
     - Algumas Metricas Observadas: Health, Metrics, Beans, Propriedades, Loggers
 - Spring Data JPA: Faz o gerenciamento do banco de dados

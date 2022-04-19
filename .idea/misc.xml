@@ -8,6 +8,7 @@
       <list>
         <option value="$PROJECT_DIR$/bookstoremanager/pom.xml" />
         <option value="$PROJECT_DIR$/exampleJPA/pom.xml" />
+        <option value="$PROJECT_DIR$/exampleSpringBot/pom.xml" />
       </list>
     </option>
   </component>
