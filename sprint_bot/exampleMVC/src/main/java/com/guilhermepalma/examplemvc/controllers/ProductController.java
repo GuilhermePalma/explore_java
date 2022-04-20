@@ -19,7 +19,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable int id) {
+    public Product getProductById(@PathVariable Long id) {
         return productRepository.findById(id).orElse(null);
     }
 
@@ -36,7 +36,7 @@ public class ProductController {
     }
 
     @DeleteMapping
-    public Product deleteProduct(@RequestParam int id) {
+    public Product deleteProduct(@RequestParam Long id) {
         Product product = getProductById(id);
 
         if (product == null) return null;
