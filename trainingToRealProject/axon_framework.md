@@ -71,6 +71,73 @@ correta.
     - É possivel reproduzir a sequência de eventos e encontrar onde ocorreu uma falha de algum processo por meio do
       historico de eventos
 
+### DDD (Domain-Driven Design)
+
+- `Domain`:
+    - Definições de `Dominio`:
+        - Conceito dentrode um "Espaço Problema"
+        - Area de assunto que um Usuario usa um Programa
+        - Esgera de Conhecimento, Influencia e Atividade
+    - Podem ter diferentes areas de conhecimentos
+- `Subdomains`
+    - Podem ser mmais complexos em que cada Subdomminio representa uma parte diferente do neogcio
+    - Para identificar o Subdominio é necessario entender o nogocio, a sua estrutura organizacional e areas de
+      especialização
+- Os `Domain` e `Subdomain` são a parte mais importante do negócio, responsavel por agregar valor (e dinheiro)
+- `Domain Model`: Um sistema de abstrações que descreve os apectos selecionados de um dominio, em que é utilizado para
+  resolver problemas relacionados a ele
+    - `Software` --> Representa uma Parte do --> `Domain Model` (Comunicação das Pessoas e Empresas) --> Representa o
+      que pensamos e falamos Sobre --> `Domain`
+    - Responsavel ppor capturar o que é importante e util para a resolução de um problema
+        - > Importante lembrar que o Software surge para solucionar problemas
+- `Axon Framework`
+    - Fornece um Modelo de Programação para criar blocos de um `Domain Model`:
+        - `Aggregate`: Entidade ou Grupo de Entidades que mantidas num estado consistente. Se torna um bloco de
+          construção principal para implementar o `Domain Model` baseado no `Axon`
+            - Aceitam comandos de negócios que produz um evento relacionado
+            - Em aplicacações sequindo o [CQRS](#cqrs) o `Aggregate` é presente no `Command Model`, pois é onde a
+              Mudança é Iniciada. Mas tambem é possivel contruir `Qury/Projection Model`, sendo elas mais diretase as
+              invariaveos de estado menos rigidas
+        - `Aggregate Root`: Entidade dentro do `Aggregate` responsavel por manter um Estado Consistente
+        - `Entity`
+        - `Value Object`: É um tipo imutavel que se diferencia apenas pelos estados das propriedades, que devem sempre
+          contar a história do problema que está sendo resolvendo
+        - `Domain Event`
+        - Uma lógica pode demandar um Agregado com mais do que apenas uma Raiz. Com isso a complexidade deve ser
+          atribuido a varias `Entities (Aggregate Members)`
+    - Faz Explicitamente a Separação entre a Lógica de negócios e a Configuração da Infraestrutura em que a Lógica será
+      executada
+        - `AxonServer`: Componente de Infraestrutura que cuida do Armazenamento/Roteadmento dos Eventos e tambem dos
+          Tipos de Mensagens (`Command` e `Quey`) de forma Otimizada e Confiavel
+        - Permite uma maior flexibiliadade e configurações (Ex: `RDBMS`, `NoSQL`, `AMQP`, etc)
+        - Permite que o programador se concentre em obter a implementação correta da lógica de dominio
+- `Bounded Context` (Contexto Limitidao)
+    - A Linguagem Ambigua como o `Domain Model` (Ou `Subdomain Model`) precisa ser desenvolvida dentro de
+      um `Bounded Context` explicitamente delimitado. Para isso existe algumas regras para `Models` e `Context`:
+        - Definir o `context` que o `model` se aplica
+        - Definir explicitamente limites (da organização da equipe), uso em partes do aplicativo e manifestações fisicas
+          (bases de codigo e esquemas de banco de dados)
+        - Manter os `models` consistente e dentro dos limites
+        - Manter um modelo de `subdomain` por um `bounded context`
+    - O `Axon Framework` aceita `bounded Context` de maneiras diferentes
+        - Perspectiva do `Framework`: Separa a Logica de Negocio das Configurações. A logica se concentra no seu proprio
+          contexto e utiliza das configurações do Sistema
+        - Perspectiva do `AxonServer`: Suporta contextos limitados, permiitndo com que diferentes aplicativos se
+          conectem a diferentes contextos dentro do `AxonServer`
+    - Mapemaneto do `Context`: Um `bounded context` não vive por conta propria, ele precisa dos diferentes contextos
+      para ser sincronizados
+        - `Partnership`: Dois Contextos/Equipes se Combinam para uma Interação
+        - `Customer-supplier`: Dois contextos no relacionamento Upstream/Downstream. Upstream pode ter sucesso
+          independente do contexto Downstream
+        - `Conformist`: Dois contextos no relacionamento Upstream/Downstream. ~~Upstream não tem sucesso se o contexto
+          Downstream tambem não tiver~~
+        - `Shared Kernel`: Compartilha uma parte do `model`
+        - `Separate Ways`
+        - `Anti-Corruption Layer`: o Contexto Downstream cria uma camada para evitar que o upstream "vaze" do seu
+          proprio modelo
+    - Alguns eventos só são relevantes no contexto da sua publicação
+- Quanto mais amplo o escopo de um evento, mais componentes acabam se acoplando à origem
+
 ### CQRS
 
 - Command Query Resposability Segragation (CQRS): Segregação da Responsabilidade de Consulta de Comando
