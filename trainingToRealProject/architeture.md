@@ -100,3 +100,34 @@ Se trata de Metodos que utilizam o Protocolo `HTTP` e `HTTPS` para realizar Requ
 - Pagamento pelo Uso (Seja por Tempo ou Espaço)
     - Permite o Escalonamento Automatico: Permite Expandir ou Diminuir a Infraestrutura
         - Permite criar Condições Lineares (Para crescimento ou diminuição) para esse Processo
+
+### Ambientes do Software
+
+- Garante a qualidade do Software para a Entrega para o Usuario Final
+- É necessario ter as epsecificações, tecnicas e protocolos de testes bem definidos entre os diversos times de
+  desenvolvimento
+- Existem APPs (TestFligth e GooglePlay) que disponibilizam o Software para uma Pequena Equipe (100 Pessoas) de
+  Testadores Registrados
+- Normalmente os testes são separados em 4 Partes:
+    - DEV: Development - Feito pelo Desenvolvedor de Software
+        - `Testes Unitarios`: O Programador pode desenvolver testes para verificar as Funcionalidades Implementadas numa
+          Função Inidividual
+        - Funções são submetidas a Testes
+        - Pensar na Função como uma Caixa Preta que recebe uma Entrada e possui um Retorno
+        - Testes mais basico, mas a parte mais importante
+    - SIT: System Integration Test - Feito pelo Desenvolvedor de Software e Engenheiro QA
+        - Normalmente, a equipe de QA escreve Casos de Teste para verificar as Funcionalidades e Estabilidades dos
+          Recursos
+        - Interfaces de Diferentes modulos que se tratam de pequenas partes do recurso são testadas
+        - São Testes Criticos
+    - UAT: User Acceptance Test - Feito pelo Cliente
+        - Etapa após os Testes Internos, com o Objetivo de testar a aprovação do Usuario Final com as Funcionalidades
+          Gerais do APP
+        - É esperado comentarios dos testadores, como melhorias, analises, pontos focais e sobre recursos e a
+          experiencia do Usuario
+    - PROD: Production - Feito por um Usuario qualquer do Sistema
+        - O APP é distribuido ao Publico por meio de Canais Oficiais (Hospedagem no Servidor Oficial, Disponibilização
+          na Loja de APPs, etc)
+        - Os Usuarios tem acesso aos recursos mais recentes e podem relatar possiveis problemas encontrados
+- Depois que o Software foi Lançado nas Plataformas Oficiais, falhas relatadas podem ser recebidas por APPs de
+  Monitoramento
