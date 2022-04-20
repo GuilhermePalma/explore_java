@@ -1,6 +1,10 @@
 package com.guilhermepalma.examplemvc.models.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "products")
@@ -10,13 +14,18 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @NotNull
+    @NotBlank
     private String name;
 
-    @Column(precision = 2)
+
+    @NotNull
+    @Min(0)
+    @NotNull
     private Double price;
 
-    @Column(length = 3, precision = 2)
+    @Min(0)
+    @Max(1)
     private Double discount;
 
     public Product() {

@@ -4,6 +4,7 @@ import com.guilhermepalma.examplemvc.models.entities.Product;
 import com.guilhermepalma.examplemvc.models.repositories.ProductRepository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class ProductController {
     }
 
     @PostMapping(consumes = "application/json")
-    public Product newProduct(@RequestBody Product productRequest) {
+    public Product newProduct(@RequestBody @Valid Product productRequest) {
         productRepository.save(productRequest);
 
         return productRequest;

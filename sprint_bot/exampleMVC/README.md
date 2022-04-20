@@ -44,3 +44,12 @@ Se Trata de um Rigido Padrão de Arquitetura de Software em que as Responsabilid
           ser obtida da classe que depende para a outra classe, ela é obtida da outra classe para a classe que depende
 - A Inversão de Dependencia só ocorre se o `Spring` for o responsavel por fazer a Instancia da Classe. Caso a Instancia
   seja Chamada explicitamente no codigo pelo programador, o `@Autowired` não irá funcionar e o atributo será `null`.
+
+### Anotações
+
+- `@Valid`: Verifica se a Classe foi Validada pelo Java Validation
+- `@NotNull`: Indica que a variavel não pode ser nula
+- `@NotBlank`: Indica que a varivel não pode ser em branca (Somente usar em Strings, classes `Double`, `Long`, etc não
+  irá funcionar)
+- `@Min(value)`: Valor minimo que pode ser aplicado a uma Variavel
+- `@Max(value)`: Valor maximo que pode ser aplicado a uma Variavel
