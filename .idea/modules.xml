@@ -7,7 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/exampleModule/appFinancial/appFinancial.iml" filepath="$PROJECT_DIR$/exampleModule/appFinancial/appFinancial.iml" />
       <module fileurl="file://$PROJECT_DIR$/bookstoremanager/bookstoremanager.iml" filepath="$PROJECT_DIR$/bookstoremanager/bookstoremanager.iml" />
       <module fileurl="file://$PROJECT_DIR$/exampleJPA/exampleJPA.iml" filepath="$PROJECT_DIR$/exampleJPA/exampleJPA.iml" />
-      <module fileurl="file://$PROJECT_DIR$/exampleSpringBot/exampleSpringBot.iml" filepath="$PROJECT_DIR$/exampleSpringBot/exampleSpringBot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sprint_bot/exampleMVC/exampleMVC.iml" filepath="$PROJECT_DIR$/sprint_bot/exampleMVC/exampleMVC.iml" />
     </modules>
   </component>
 </project>

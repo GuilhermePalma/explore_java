@@ -17,8 +17,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="exampleMVC" />
         <module name="exampleJPA" />
-        <module name="exampleSpringBot" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -29,13 +29,15 @@
       <module name="exampleJPA" target="1.8" />
       <module name="exampleJPA1" target="1.8" />
       <module name="exampleJPA2" target="1.8" />
-      <module name="exampleSpringBot" target="1.8" />
+      <module name="exampleMVC" target="1.8" />
+      <module name="simpleRequestAPI" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="bookstoremanager" options="-parameters" />
-      <module name="exampleSpringBot" options="-parameters" />
+      <module name="exampleMVC" options="-parameters" />
+      <module name="simpleRequestAPI" options="-parameters" />
     </option>
   </component>
 </project>
