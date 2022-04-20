@@ -27,6 +27,50 @@ correta.
     - Textos ~~Tachados~~: Representam informações da interpretação propria do escritor que não se tem certeza
     - Textos ```code```: Representa Trechos descrevendo ou contendo codigo
 
+### Event Sourcing
+
+- Garante com que todas as alterações sejam armazenadas numa sequência de eventos, mantendo um Historico de Eventos
+- Armazenar o Estado de um Aplicativo por meio do Historico de Eventos Passados
+    - O Estado Atual será reconstruindo no Historico Completo de Eventos
+    - Os Eventos são a unica fonte verdadeira do que aconteceu na Aplicação
+    - O Estado Atual tambem é chamado de `Materialized State`
+    - Os eventos não podem ser modificados, já que eles representam algo que aconteceu
+    - Ex: O Carrinho de Compras de um Comercio é acomapanhado desde a seleçãoed um um ou varios produtos até a compra
+      final, mapeando os possiveis itens uqe foram tirados do carrinho
+- Permite executar Projeções do Estado atual da Aplicação, consultar eventos para gerar uma Projeção Passada ou uma
+  Auditoria
+- Para reconstruir o Estado Materializado é necessario realizar repretições dos eventos
+    - Os eventos serão entregues aos manipuladores de eventos que realizam o procesamento
+    - Ao recriar os eventos é necessario verificar se certos eventos ao serem executados novamente irão gerar novos.
+      Nesse caso é necessario desabilitar o replay desses eventos para evitar problemas
+        - Ex: Recriar o processo de Compra pode ocorrer uma nova cobrança no evento de pagamento, por isso é necessario
+          desabilitar
+- `Snapshot`: Carregar todo o historico de eventos de um `Agregado` pode gerar um processo muito longo, com isso pode
+  ser tirado Snapshot que irá representar o Estado Atual do Agregado
+    - A criação do Snapshot é um processo assuncrone
+    - No `Axon Framework` é necessario configurar quando esses Snapshot serão gerados
+- `Upcaster` (Transmissão): São usados para implementar atualizações em um `esquema/model`
+    - Responsavel por pegar os eventos usando o esquema antigo e então usar o novo modelo para atualizar as informações
+    - Podem ser aplicados mais de um `Upcaster` na repetição de Evenetos
+    - Pode ser usado para combinar varios eventos em um unico evento e vice-versa
+    - Para manter uma segurança entre os Atributos Antigos e Novos:
+        - Não remover campos e sim marca-los como `deprected`
+        - Fornecer valor padrão a novos campos
+        - Não alterar o Tipo do evento e sim apresentar um Novo Evento
+- Segurança
+    - Os eventos são imutaveis e precisam sempre estar disponiveis
+    - Regulamentações que peçam para que os dados sejam excluidos vão contra o `Event SOurcing`
+    - `Cryptographic Erasure`: Usa algoritimos de criptografia para Criptografar dados
+        - As chaves são armazenadas junto do armazenamento de eventos
+        - As informações são descriptografadas quando é realizado uma repetição de eventos
+        - Quando as chaves são excluidas, os dados criptografados por essa chave se tornam inacessivel
+- Considerações Finais
+    - Faz com que a aplicação se torne um pouco mais complexa, tanto na implantação como na manutenção
+    - Permite com que o software seja adaptavel
+    - Importante definir quais eventos serão armazenados
+    - É possivel reproduzir a sequência de eventos e encontrar onde ocorreu uma falha de algum processo por meio do
+      historico de eventos
+
 ### CQRS
 
 - Command Query Resposability Segragation (CQRS): Segregação da Responsabilidade de Consulta de Comando
@@ -79,18 +123,10 @@ correta.
 - ``Read Database``: Banco de Dados utilizado para Leitura
 - Ambos os Bancos precisam sempre estarem sincronizados para não ocorrer divergencias
 
-### Event Sourcing
-
-- Garane com que todas as alterações sejam armazenadas numa sequência de eventos, mantendo um Historico de Eventos
-- Permite executar Projeções do Estado atual da Aplicaão, consultar eventos para gerar uma Projeção Passada ou uma
-  Auditoria
-- Faz com que a aplicação se torne um pouco mais complexa, tanto na implantação como na manutenção
-
 ### Axon Framework
 
 - Framework Java que permite implementar o padrão de arquitetura CQRS
-    - Realiza a Implementação do CQRS por meio de Blocos de Construções: Agregados, Repositorios e Barramentos de
-      Eventos
+    - Realiza a Implementação do CQRS através de Blocos de Construções: Agregados, Repositorios e Barramentos de Eventos
     - Fornece anotações para criar ``Objetos Agregados`` (Conjuntos de eventos que formam o Estado atual do Objeto)
     - Fornece anotações para criar ``Ouvintes de Eventos``
 - Não tem como objetivo ocultar a arquitetura CQRS do Desenvolvedor, mas sim ajudar a garantir a entrega de eventos aos
