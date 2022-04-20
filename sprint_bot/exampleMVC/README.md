@@ -1,5 +1,7 @@
 ### MVC
 
+Se Trata de um Rigido Padrão de Arquitetura de Software em que as Responsabilidades de cada camada ficam segragadas.
+
 - Model: Regras de Controle, Validação, Entidade
 - View: Renderiza a resposta da Requisição WEB
     - Utilização Javascript, CSS, HTML
@@ -17,4 +19,14 @@
       FrontController, obtem a URL e redireciona ao Controller correto
     - Controller: Redireciona o Fluxo
     - Model: Realiza Validações, realiza interações com o Banco de Dados
-    - 
+
+### Criação do Projeto MVC
+
+- `src.main.java.guilhermepalma.controllers`: Adiciona os Controllers RESTfull
+- `src.main.java.guilhermepalma.models.entity`: Adiciona as Classes Mapeadas com o JPA para Mapeamento com o Banco de
+  Dados
+- `src.main.java.guilhermepalma.models.repositories`: Armazena as Interfaces Javas de Repositorio
+    - Abstrair e Criar Metodos de Altor Nivel que dará acesso aos Dados
+    - ``extends CrudRepository<T, V>``
+        - `T`: Classe que representa o Repositorio que está sendo iniciado
+        - `V`: Classe que representa o Tipo do ID da Classe
