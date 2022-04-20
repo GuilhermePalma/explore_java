@@ -89,3 +89,14 @@ Se trata de Metodos que utilizam o Protocolo `HTTP` e `HTTPS` para realizar Requ
 |   Flexibilidade para Utilizar Diferentes Tecnologias    | Uso de Softwares de Monitoramento para acompanhar o Estado do Software |
 | Mais simples de Fazer o `Deploy` do Sistema em Produção |           Sistema mais complexo de Entender para Iniciantes            |
 |                                                         |                                                                        |
+
+### Cloud Computing
+
+- Inspirado nos Serviços Utiliarios Cotidianos (Ex: Agua, Luz, etc), em que se paga o que se utiliza de Infraestrutura
+    - Antes era utilizado Estruturas Dimensionadas e Limitadas, em que era implantado um serviço de grande cobertura,
+      mas que na maioria do tempo ficava ocioso
+    - Inicialmente era comprado uma Estrutura para Hospedagem do Serviço, depois fui utilizado o esquema de "aluguel" de
+      máquinas, depois evoluiu para utilização de Máquinas Virtuais
+- Pagamento pelo Uso (Seja por Tempo ou Espaço)
+    - Permite o Escalonamento Automatico: Permite Expandir ou Diminuir a Infraestrutura
+        - Permite criar Condições Lineares (Para crescimento ou diminuição) para esse Processo
