@@ -8,23 +8,48 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(unique = true)
     private String name;
 
+    @Column(precision = 2)
+    private Double price;
+
+    @Column(length = 3, precision = 2)
+    private Double discount;
+
     public Product() {
     }
 
-    public Product(String name) {
+    public Product(String name, Double price, Double discount) {
+        super();
         this.name = name;
+        this.price = price;
+        this.discount = discount;
     }
 
-    public int getId() {
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

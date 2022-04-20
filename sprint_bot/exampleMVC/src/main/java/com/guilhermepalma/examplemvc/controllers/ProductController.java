@@ -2,7 +2,6 @@ package com.guilhermepalma.examplemvc.controllers;
 
 import com.guilhermepalma.examplemvc.models.entities.Product;
 import com.guilhermepalma.examplemvc.models.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +10,12 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    @Autowired // O Spring atribui uma Implementação dentro dessa Interface (Injeção de Dependencia)
-    private ProductRepository productRepository;
+    // O Spring atribui uma Implementação dentro dessa Interface (Injeção de Dependencia)
+    private final ProductRepository productRepository;
 
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable int id) {
@@ -25,13 +27,11 @@ public class ProductController {
         return (List<Product>) productRepository.findAll();
     }
 
-    @PostMapping
-    public @ResponseBody
-    Product newProduct(@RequestParam String name) {
-        Product product = new Product(name);
-        productRepository.save(product);
+    @PostMapping(consumes = "application/json")
+    public Product newProduct(@RequestBody Product productRequest) {
+        productRepository.save(productRequest);
 
-        return product;
+        return productRequest;
     }
 
     @DeleteMapping
