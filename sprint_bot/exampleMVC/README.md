@@ -30,3 +30,17 @@ Se Trata de um Rigido Padrão de Arquitetura de Software em que as Responsabilid
     - ``extends CrudRepository<T, V>``
         - `T`: Classe que representa o Repositorio que está sendo iniciado
         - `V`: Classe que representa o Tipo do ID da Classe
+
+### Inversão de Controle
+
+- Inversion Controll using Dependency Injection: Inversão de Controle usando Injeção de Dependencia
+- Ocorre quando uma Classe A depende de uma Classe B e irá utilizar uma instância da Classe B em algum momento
+- `@Autowired`: O Framework responsavel pela Aplicação (nesse contexto, o `Spring`) adiciona uma Instancia da Classe
+  nela Propria
+    - Ex: Uma `ClassA` depende de uma `ClassB`, mas a instância da `ClassB` é Complexa e com vários Parametros. Com
+      isso, a `ClassA` cria um Atributo `ClassB classB` marcado com o `@Autowired` que o `Spring Framework` faz uma
+      Copia dos Atributos da `ClassB` e atribui isso na variavel `classb`
+        - Chama **Inversão de Controle** por conta que a ordem de Instanciação é inversa, ou seja, ao inves da instância
+          ser obtida da classe que depende para a outra classe, ela é obtida da outra classe para a classe que depende
+- A Inversão de Dependencia só ocorre se o `Spring` for o responsavel por fazer a Instancia da Classe. Caso a Instancia
+  seja Chamada explicitamente no codigo pelo programador, o `@Autowired` não irá funcionar e o atributo será `null`.
