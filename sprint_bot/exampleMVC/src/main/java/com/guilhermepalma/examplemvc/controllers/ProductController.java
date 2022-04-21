@@ -2,10 +2,12 @@ package com.guilhermepalma.examplemvc.controllers;
 
 import com.guilhermepalma.examplemvc.models.entities.Product;
 import com.guilhermepalma.examplemvc.models.repositories.ProductRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/products")
@@ -18,14 +20,18 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return productRepository.findById(id).orElse(null);
-    }
-
     @GetMapping
-    public List<Product> getAllProducts() {
-        return (List<Product>) productRepository.findAll();
+    public Iterable<Product> getProducts(
+            @RequestParam(required = false) Long id,
+            @RequestParam(defaultValue = "0", required = false, name = "page") int numberPages,
+            @RequestParam(defaultValue = "15", required = false) int quantityResults) {
+
+        if (id != null) return Collections.singletonList(productRepository.findById(id).orElse(null));
+
+        if (quantityResults > 35) quantityResults = 30;
+
+        Pageable pageable = PageRequest.of(numberPages, quantityResults);
+        return productRepository.findAll(pageable);
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, consumes = "application/json")
@@ -34,12 +40,11 @@ public class ProductController {
         return productRequest;
     }
 
-    @DeleteMapping("/{id}")
-    public Product deleteProduct(@PathVariable Long id) {
-        Product product = getProductById(id);
+    @DeleteMapping
+    public Product deleteProduct(@RequestParam Long id) {
+        Product product = productRepository.findById(id).orElse(null);
 
-        if (product == null) return null;
-        productRepository.delete(product);
+        if (product != null) productRepository.delete(product);
 
         return product;
     }

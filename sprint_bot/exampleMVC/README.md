@@ -30,6 +30,8 @@ Se Trata de um Rigido Padrão de Arquitetura de Software em que as Responsabilid
     - ``extends CrudRepository<T, V>``
         - `T`: Classe que representa o Repositorio que está sendo iniciado
         - `V`: Classe que representa o Tipo do ID da Classe
+    - `extends PagingAndSortingRepository<T, V>`: Segue o mesmo conceito e possui os mesmos metodos do `CrudRepository`,
+      mas adiciona metodos para Paginação e Ordenação de Dados do Banco de Dados
 
 ### Inversão de Controle
 
