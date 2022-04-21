@@ -32,6 +32,9 @@ Se Trata de um Rigido Padrão de Arquitetura de Software em que as Responsabilid
         - `V`: Classe que representa o Tipo do ID da Classe
     - `extends PagingAndSortingRepository<T, V>`: Segue o mesmo conceito e possui os mesmos metodos do `CrudRepository`,
       mas adiciona metodos para Paginação e Ordenação de Dados do Banco de Dados
+        - Ao Seguir Padrões do `Spring Bot` é possivell anotar metodos em interfaces que o `Spring Bot` junto ao JPA
+          realizam uma busca
+            - Ex: `public void findByPriceLessThanEqual(Double price)` --> Padrão: `findBy...`
 
 ### Inversão de Controle
 

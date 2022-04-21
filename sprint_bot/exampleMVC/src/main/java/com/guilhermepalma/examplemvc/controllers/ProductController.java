@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products")
@@ -32,6 +34,33 @@ public class ProductController {
 
         Pageable pageable = PageRequest.of(numberPages, quantityResults);
         return productRepository.findAll(pageable);
+    }
+
+    @GetMapping("/search")
+    public Iterable<Product> searchProduct(
+            @RequestParam(name = "keywords", required = false, defaultValue = "") String segmentName,
+            @RequestParam(name = "priceGreater", required = false, defaultValue = "0") Integer priceGreater,
+            @RequestParam(name = "priceLess", required = false) Integer priceLess) {
+
+        List<Product> keywordResults = (List<Product>) productRepository.findByNameContainingIgnoreCase(segmentName);
+        List<Product> priceLessResults = (List<Product>) productRepository
+                .findByPriceLessThanEqual(priceLess != null ? priceLess : Double.MAX_VALUE);
+        List<Product> priceGreaterResults = (List<Product>) productRepository
+                .findByPriceGreaterThanEqual(Double.valueOf(priceGreater));
+
+        // Realiza Comparações para Obter o Valor Final
+        return keywordResults.stream()
+                .filter(productKeyword ->
+                        priceGreaterResults.stream()
+                                .map(Product::getId)
+                                // Compara se possuem ID iguais
+                                .anyMatch(productPriceGreater -> productPriceGreater.equals(productKeyword.getId()))
+                ).collect(Collectors.toList())
+                .stream().filter(resultsProducts ->
+                        priceLessResults.stream()
+                                .map(Product::getId)
+                                .anyMatch(productPressLess -> productPressLess.equals(resultsProducts.getId()))
+                ).collect(Collectors.toList());
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, consumes = "application/json")

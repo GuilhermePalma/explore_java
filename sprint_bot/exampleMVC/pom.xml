@@ -25,6 +25,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency> <!-- Dependencia do Hibernate adicionada para Resolver Incompatibilidade de Busca por Nome -->
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.6.4.Final</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
