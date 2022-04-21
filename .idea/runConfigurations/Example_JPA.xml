@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ExampleJPA" type="Application" factoryName="Application">
+  <configuration default="false" name="Example JPA" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.guilhermepalma.exampleJPA.ExampleJPA" />
     <module name="exampleJPA" />
     <method v="2">
