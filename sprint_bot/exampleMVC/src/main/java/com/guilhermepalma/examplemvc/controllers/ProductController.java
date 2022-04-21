@@ -28,15 +28,14 @@ public class ProductController {
         return (List<Product>) productRepository.findAll();
     }
 
-    @PostMapping(consumes = "application/json")
-    public Product newProduct(@RequestBody @Valid Product productRequest) {
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, consumes = "application/json")
+    public Product managerProduct(@RequestBody @Valid Product productRequest) {
         productRepository.save(productRequest);
-
         return productRequest;
     }
 
-    @DeleteMapping
-    public Product deleteProduct(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public Product deleteProduct(@PathVariable Long id) {
         Product product = getProductById(id);
 
         if (product == null) return null;
