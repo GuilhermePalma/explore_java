@@ -1,4 +1,3 @@
-
 ### Axon Framework
 
 - Framework Java que permite implementar o padrão de arquitetura CQRS
@@ -55,3 +54,104 @@
       ``NameOfClassAggregate``) e Exemplo de Queries( `NameOfClasseRepository` ), Exemplo de Model(``NameOfClasse``),
       Exemplo de DTO(`NameOfClasseDTO`), Exemplo de Controller(`NameOfClasseController`) . Normalmente, as classes são
       geradas com o mesmo nome, alterando apenas a Terminação
+
+### Estrutura
+
+Anotações Abaixo é de uma sequência de 5 Videos do Canal Axon IQ que introduz o Axon Framework
+
+- Dependencias
+    - `axon-spring-bot-start`: `Start` nas Depdencias do Axon
+- `Packages`: `Packages` dentro da Pasta Principal do Projeto (`src.main.java.nameofproject`)
+    - `command`:
+        - Criar uma classe e marca-la como `@Aggregate`(Significa que o Spring irá cria um `aggregate` na classe)
+        - Criar o Atributo Identificador do `Aggregate` e marca-lo como `@AggregateIdentifier`
+        - Criar um Construtor Padrão Vazio (Requerido)
+        - Criar um Construtor que recebem os `commands` (do package `coreapi.commands`)
+          (Ex: `coreapi.commands.CreateFoodCommand`)
+            - Marcar o Construtor com `@CommandHandler`
+                - Faz com que o Construtor fique marcado como um `command bus` (Barramento de Comandos) capaz de
+                  controlar comandos da Classe `command` inserida no construtor
+                - Após um evento ocorrer, ele publica que o evento foi realizado
+                - Somente reage após o evento ter ocorrido
+            - No construtor inserir `AggregateLifecycle.apply(new nameClassOfEvent(id))`
+                - Metodo responsavel por acessar o ciclo de vida do `aggregate` e aplicar o evento especifico a partir
+                  do id do Item
+                - Classe (`@Aggregate`) --> Construtor --> `@CommandHandler` --> Recebe um `Command` como Parametro
+                  (Ação que será realizada) --> Usa do Ciclo de vida do `Aggregate` --> Gera um `event` após o `command`
+                  ser realizado
+        - Criar Metodos chamados `on` que recebem os `events` como Parametro (do package `coreapi.events`)
+            - Marcar o Metodo como `@EventSourcingHandler`:
+        - Criar Metodos chamados `handler`: Metodos responsaveis por Reagir a Eventos Publicados e notificar o sistema
+          que a decisão foi tomada
+            - Será um Metodo que será executado de forma Assincrona
+            - No metodo `AggregateLifecycle.apply()` pode ser passado mais parametros para o `coreapi.command.Class`
+    - `query`:
+        - Armazenará e Retornará uma Resposta para o `Handler Events` para atualizar o `Handling Queries`
+        - Criar uma `Class` que receberá os Dados
+        - Criar um `Repository` que terá o controle do banco de dados
+        - Criar uma Outra classe `NameClassProjector`
+            - Marca-la como `@Component`
+            - Implementar o `Repository` nessa Classe (Atributo e Construtor com Parametro)
+            - Implementar um metodo `on`, marcado com o `@EventHandler` e recebendo como Paramtro o `Event`. No metodo,
+              desenvolver:
+                - Instancia a `Class`
+                - Manipular a opreção no `Repository`
+            - Para executar Consultas, implementar um metodo `handle`, marcando com `@QueryHandler`, recebendo como
+              parametro uma `Query`
+                - Implementar a operação de busca pelo `Repository`
+    - `coreapi`:
+        - `commands`: Expressa a Intenção de realizar alguma **operação**
+            - ``@TargetAggregateIdentifier``: Marca o **Identificador/ID** do `command`
+        - `events`: Notificam que alguma operação aconteceu
+        - `queries`: Requisições de Dados
+    - `gui` ou `controller`: Classe Responsavel pela Interface Grafica e Disparar `commands` e `queries`
+        - Criar uma `Class` e marcala como `@RestController`
+        - Criar como Atributo o `CommandGateway`: Responsavel por ser o meio entre o `contoller` e o `query bus`
+          (Barramento de Comandos)
+        - Criar como Atributo o `QueryGateway`: Responsavel por ser o meio entre o `contoller` e o `query bus`
+          (Barramento de Consultas)
+        - Criar um metodo seguindo a API REST e utilizar alguns dos metodos do `commandGateway`
+            - Possuem Metodos com resposta **Assincrona** e outros com respostas **Sincronas**
+            - Nos metodos passar a classe `command`
+        - Criar um Metodo seguindo a API REST e utilizar alguns dos metodos da `queryGateway`
+            - Possuem Metodos com resposta **Assincrona** e outros com respostas **Sincronas**
+            - Nos metodos passar a classe `query`
+
+### Criando um Projeto com AXON
+
+- Criar os `packages`: `command`, `query` e `coreapi` na Pasta Principal do Projeto (`src.main.java.nameofproject`)
+- Criar os arquivos `Command`, `Event` e `Query` dentro de `coreapi`
+    - Normalmente é criado seguindo o Padrão `nameClassOneCommand.java`, `nameClassOneEvent.java`,
+      `nameClassOneQuery.java`
+- No arquivo `nameClassOneCommand.java` é preciso marcar o Atributo Identificador (ID) com `@TargetAggregateIdentifier`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
