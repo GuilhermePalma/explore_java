@@ -8,6 +8,10 @@
       <list>
         <option value="$PROJECT_DIR$/bookstoremanager/pom.xml" />
         <option value="$PROJECT_DIR$/exampleJPA/pom.xml" />
+        <option value="$PROJECT_DIR$/trainingToRealProject/chatRoom/pom.xml" />
+        <option value="$PROJECT_DIR$/trainingToRealProject/exampleAxonFramework/pom.xml" />
+        <option value="$PROJECT_DIR$/exampleSwagger/pom.xml" />
+        <option value="$PROJECT_DIR$/exampleAxonFramework/pom.xml" />
       </list>
     </option>
   </component>

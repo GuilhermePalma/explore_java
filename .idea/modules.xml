@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/exampleModule/appCalculate/appCalculate.iml" filepath="$PROJECT_DIR$/exampleModule/appCalculate/appCalculate.iml" />
       <module fileurl="file://$PROJECT_DIR$/exampleModule/appFinancial/appFinancial.iml" filepath="$PROJECT_DIR$/exampleModule/appFinancial/appFinancial.iml" />
       <module fileurl="file://$PROJECT_DIR$/bookstoremanager/bookstoremanager.iml" filepath="$PROJECT_DIR$/bookstoremanager/bookstoremanager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trainingToRealProject/chatroom/chatroom.iml" filepath="$PROJECT_DIR$/trainingToRealProject/chatroom/chatroom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/exampleAxonFramework/exampleAxonFramework.iml" filepath="$PROJECT_DIR$/exampleAxonFramework/exampleAxonFramework.iml" />
       <module fileurl="file://$PROJECT_DIR$/exampleJPA/exampleJPA.iml" filepath="$PROJECT_DIR$/exampleJPA/exampleJPA.iml" />
     </modules>
   </component>
