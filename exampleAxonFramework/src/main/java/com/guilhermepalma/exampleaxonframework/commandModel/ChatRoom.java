@@ -32,14 +32,14 @@ public class ChatRoom {
     @CommandHandler
     public void handle(JoinRoomCommand joinRoomCommand) {
         if (!partipants.contains(joinRoomCommand.getParticipant())) {
-            AggregateLifecycle.apply(new PartipantJoinedRoomEvent(roomId, joinRoomCommand.getParticipant()));
+            AggregateLifecycle.apply(new ParticipantJoinedRoomEvent(roomId, joinRoomCommand.getParticipant()));
         }
     }
 
     @CommandHandler
     public void handle(LeaveRoomCommand leaveRoomCommand) {
         if (partipants.contains(leaveRoomCommand.getParticipant())) {
-            AggregateLifecycle.apply(new PartipantLeftRoomEvent(roomId, leaveRoomCommand.getParticipant()));
+            AggregateLifecycle.apply(new ParticipantLeftRoomEvent(roomId, leaveRoomCommand.getParticipant()));
         }
     }
 
@@ -62,13 +62,13 @@ public class ChatRoom {
     }
 
     @EventSourcingHandler
-    protected void on(PartipantJoinedRoomEvent partipantJoinedRoomEvent) {
-        this.partipants.add(partipantJoinedRoomEvent.getParticipant());
+    protected void on(ParticipantJoinedRoomEvent participantJoinedRoomEvent) {
+        this.partipants.add(participantJoinedRoomEvent.getParticipant());
     }
 
     @EventSourcingHandler
-    protected void on(PartipantLeftRoomEvent partipantLeftRoomEvent) {
-        this.partipants.remove(partipantLeftRoomEvent.getParticipant());
+    protected void on(ParticipantLeftRoomEvent participantLeftRoomEvent) {
+        this.partipants.remove(participantLeftRoomEvent.getParticipant());
     }
 
 

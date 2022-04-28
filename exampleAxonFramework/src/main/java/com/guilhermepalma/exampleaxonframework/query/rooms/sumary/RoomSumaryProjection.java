@@ -1,8 +1,8 @@
 package com.guilhermepalma.exampleAxonFramework.query.rooms.sumary;
 
 import com.guilhermepalma.exampleAxonFramework.coreapi.AllRoomsQuery;
-import com.guilhermepalma.exampleAxonFramework.coreapi.PartipantJoinedRoomEvent;
-import com.guilhermepalma.exampleAxonFramework.coreapi.PartipantLeftRoomEvent;
+import com.guilhermepalma.exampleAxonFramework.coreapi.ParticipantJoinedRoomEvent;
+import com.guilhermepalma.exampleAxonFramework.coreapi.ParticipantLeftRoomEvent;
 import com.guilhermepalma.exampleAxonFramework.coreapi.RoomCreatedEvent;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
@@ -29,12 +29,12 @@ public class RoomSumaryProjection {
     }
 
     @EventHandler // Atualiza a Informação
-    public void on(PartipantJoinedRoomEvent joinedRoomEvent) {
+    public void on(ParticipantJoinedRoomEvent joinedRoomEvent) {
         roomSumaryRepository.getById(joinedRoomEvent.getRoomId()).addParticipant();
     }
 
     @EventHandler // Atualiza a Informação
-    public void on(PartipantLeftRoomEvent leftRoomEvent) {
+    public void on(ParticipantLeftRoomEvent leftRoomEvent) {
         roomSumaryRepository.getById(leftRoomEvent.getRoomId()).removeParticipant();
     }
 

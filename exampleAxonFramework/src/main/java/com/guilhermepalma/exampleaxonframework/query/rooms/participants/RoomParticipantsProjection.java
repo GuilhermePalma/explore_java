@@ -1,7 +1,7 @@
 package com.guilhermepalma.exampleAxonFramework.query.rooms.participants;
 
-import com.guilhermepalma.exampleAxonFramework.coreapi.PartipantJoinedRoomEvent;
-import com.guilhermepalma.exampleAxonFramework.coreapi.PartipantLeftRoomEvent;
+import com.guilhermepalma.exampleAxonFramework.coreapi.ParticipantJoinedRoomEvent;
+import com.guilhermepalma.exampleAxonFramework.coreapi.ParticipantLeftRoomEvent;
 import com.guilhermepalma.exampleAxonFramework.coreapi.RoomParticipantQuery;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
@@ -29,12 +29,12 @@ public class RoomParticipantsProjection {
     }
 
     @EventHandler
-    public void on(PartipantJoinedRoomEvent joinedRoomEvent) {
+    public void on(ParticipantJoinedRoomEvent joinedRoomEvent) {
         participantsRepository.save(new RoomParticipants(joinedRoomEvent.getRoomId(), joinedRoomEvent.getParticipant()));
     }
 
     @EventHandler
-    public void on(PartipantLeftRoomEvent leftRoomEvent) {
+    public void on(ParticipantLeftRoomEvent leftRoomEvent) {
         participantsRepository.deleteByParticipantAndRoomId(leftRoomEvent.getParticipant(), leftRoomEvent.getRoomId());
     }
 
