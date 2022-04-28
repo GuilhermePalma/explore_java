@@ -20,6 +20,10 @@
 
 - `@EventSourcingHandler`: Responsavel por "Escutar" (`Listener`) o Evento de Criação de uma Sala
     - Sempre que ocorrer uma Alteração, ele estará ciente
+- `cosumes`: Propriedade utilizada nos `Mapping` dos Metodos HTTP que definem quais `media types` são **suportados**
+  (ex: xml, json)
+- `produces`: Propriedade utilizada nos `Mapping` dos Metodos HTTP que definem quais `media types` são **retornados**
+  (ex:  xml, json)
 
 #### Passo a Passo do Desenvolvimento
 
