@@ -12,39 +12,38 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
-import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping("chat/")
 public class CommandController {
 
     /**
-     * Atua como Event Store
+     * Atua como Event Store. Responsavel por Redirecionar os Commands para serem executados
      */
-    private final CommandGateway commandGatewayFactory;
+    private final CommandGateway commandGateway;
 
-    public CommandController(CommandGateway commandGatewayFactory) {
-        this.commandGatewayFactory = commandGatewayFactory;
+    public CommandController(CommandGateway commandGateway) {
+        this.commandGateway = commandGateway;
     }
 
-    @PostMapping("rooms")
-    public Future<String> createChatRoom(@RequestBody @Valid Room room) {
+    @PostMapping(value = "rooms", consumes = {"application/json"}, produces = {"text/plain"})
+    public String createChatRoom(@RequestBody @Valid Room room) {
         String roomId = room.getRoomId() == null ? UUID.randomUUID().toString() : room.getRoomId();
-        return commandGatewayFactory.send(new CreateRoomCommand(roomId, room.getName()));
+        return commandGateway.sendAndWait(new CreateRoomCommand(roomId, room.getName()));
     }
 
-    @PostMapping("rooms/{roomId}/participants")
-    public Future<String> joinChatRoom(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
-        return commandGatewayFactory.send(new JoinRoomCommand(roomId, participant.getName()));
+    @PostMapping(value = "rooms/{roomId}/participants", consumes = {"application/json"}, produces = {"text/plain"})
+    public String joinChatRoom(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
+        return commandGateway.sendAndWait(new JoinRoomCommand(roomId, participant.getName()));
     }
 
-    @PostMapping("rooms/{roomId}/messages")
-    public Future<String> postMessage(@PathVariable String roomId, @RequestBody @Valid Message message) {
-        return commandGatewayFactory.send(new PostMessageCommand(roomId, message.getName(), message.getMessage()));
+    @PostMapping(value = "rooms/{roomId}/messages", consumes = {"application/json"}, produces = {"text/plain"})
+    public String postMessage(@PathVariable String roomId, @RequestBody @Valid Message message) {
+        return commandGateway.sendAndWait(new PostMessageCommand(roomId, message.getName(), message.getMessage()));
     }
 
-    @PostMapping("rooms/{roomId}/leave")
-    public Future<String> leaveChatRoom(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
-        return commandGatewayFactory.send(new LeaveRoomCommand(roomId, participant.getName()));
+    @PostMapping(value = "rooms/{roomId}/leave", consumes = {"application/json"}, produces = {"text/plain"})
+    public String leaveChatRoom(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
+        return commandGateway.sendAndWait(new LeaveRoomCommand(roomId, participant.getName()));
     }
 }
