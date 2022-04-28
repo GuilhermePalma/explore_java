@@ -53,7 +53,6 @@
         - Retornos Assincronos
             - Marque o Retorno dos Metodos como `Future<String>`
             - Retorne o metodo `commandGateway.send(command)` do `CommandGateway` criado acima
-        - Retornos Sincronos: **TODO: DESENVOLVER**
 - Dentro de `query`: Crie os `Packages` necessarios para Identificar à qual Parte a `Query` irá se referir
     - Cria uma Classe Responsavel pela Consulta
     - Marque-a com `@Entity` para realizar o Mapeamento no Banco de Dados
@@ -85,4 +84,3 @@
             - Retorne o
               metodo `queryGateway.query(classQuery, new MultipleInstancesResponseType<>(classReturned.class))`
               do `QueryGateway` criado acima
-        - Retornos Sincronos: **TODO: DESENVOLVER**
