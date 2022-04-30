@@ -88,7 +88,6 @@ fabric.properties
 .idea/*
 
 !.idea/codeStyles
-!.idea/runConfigurations
 
 ### Java ###
 # Compiled class file
@@ -136,26 +135,3 @@ buildNumber.properties
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,java,intellij+all
-
-.factorypath
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
