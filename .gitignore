@@ -93,6 +93,9 @@ fabric.properties
 # Compiled class file
 *.class
 
+# JPA Plugin
+.jpb
+
 # Log file
 *.log
 
