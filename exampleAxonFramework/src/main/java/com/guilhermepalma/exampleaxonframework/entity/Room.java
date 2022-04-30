@@ -1,5 +1,7 @@
 package com.guilhermepalma.exampleAxonFramework.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.NotEmpty;
 
 public class Room {
@@ -7,6 +9,7 @@ public class Room {
     private String roomId;
 
     @NotEmpty
+    @Length(min = 3, max = 80)
     private String name;
 
     public String getRoomId() {
