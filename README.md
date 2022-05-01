@@ -1,3 +1,9 @@
+### Importando Projetos IntelliJ
+
+- Abra o Diretorio na IntelliJ
+- No Menu Superior clique em: `File` --> `New` --> `Module from Existing Sources`
+- Selecione o arquivo `pom.xml` e clique em `Ok`
+
 ### Spring Bot
 
 - Alternativa para Utilizar em Serviços Empresariais (Autenticação, Persistencia, etc)

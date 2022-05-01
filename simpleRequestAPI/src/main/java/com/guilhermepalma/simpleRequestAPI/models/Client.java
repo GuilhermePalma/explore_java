@@ -1,4 +1,4 @@
-package com.guilhermepalma.examplespringbot.models;
+package com.guilhermepalma.simpleRequestAPI.models;
 
 import java.util.Random;
 

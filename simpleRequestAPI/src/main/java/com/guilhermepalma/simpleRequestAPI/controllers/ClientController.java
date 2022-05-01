@@ -1,6 +1,6 @@
-package com.guilhermepalma.examplespringbot.controllers;
+package com.guilhermepalma.simpleRequestAPI.controllers;
 
-import com.guilhermepalma.examplespringbot.models.Client;
+import com.guilhermepalma.simpleRequestAPI.models.Client;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;

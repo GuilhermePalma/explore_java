@@ -1,4 +1,4 @@
-package com.guilhermepalma.examplespringbot.controllers;
+package com.guilhermepalma.simpleRequestAPI.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

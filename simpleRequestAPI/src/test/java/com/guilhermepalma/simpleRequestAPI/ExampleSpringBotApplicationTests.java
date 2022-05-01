@@ -1,4 +1,4 @@
-package com.guilhermepalma.examplespringbot;
+package com.guilhermepalma.simpleRequestAPI;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

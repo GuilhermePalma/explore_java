@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.guilhermepalma</groupId>
-	<artifactId>exampleSwagger</artifactId>
+	<artifactId>exampleAxonFramework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>exampleAxonFramework</name>
 	<description>A Simple Project for Learn Axon Frameworl, CQRS, DDD and Event Listening</description>
