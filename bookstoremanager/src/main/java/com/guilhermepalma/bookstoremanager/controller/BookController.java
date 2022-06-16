@@ -20,9 +20,9 @@ import javax.validation.Valid;
 @RequestMapping("/api/v1/books") // Define a URL de Acesso (nomesite.com/api/v1/books)
 public class BookController {
 
+    @Autowired // Responsavel pela injeção de dependencia para usar uma Classe na classe Atual
     private final BookService bookService;
 
-    @Autowired // Responsavel pela injeção de dependencia para usar uma Classe na classe Atual
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }

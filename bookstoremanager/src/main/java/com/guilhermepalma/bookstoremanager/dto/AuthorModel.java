@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -28,6 +29,6 @@ public class AuthorModel {
     private String name;
 
     @NotNull
-    @Size(max = 110)
+    @Range(min = 1, max = 150)
     private Integer age;
 }
