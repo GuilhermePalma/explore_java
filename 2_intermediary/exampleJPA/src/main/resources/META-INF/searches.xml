@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm" version="3.0">
+
+    <!-- Tag Responsavel por Realizar uma Consulta JPQL Nomeada no Banco de Dados -->
+    <named-query name="moviesRattinGratterOf">
+        <query>
+            SELECT DISTINCT f FROM Movie f
+            JOIN FETCH f.actorsList
+            WHERE f.rating >= :rating
+        </query>
+    </named-query>
+
+    <!-- Tag Responsavel por configurar uma Query SQL e o Mapeamento do Resultado -->
+    <named-native-query name="mediaRatting" result-set-mapping="rattingMovieMap">
+        <query>
+            SELECT AVG(rating) as mediaRating FROM movies
+        </query>
+    </named-native-query>
+
+    <!-- Tag responsavel pelo Mapemanento do Resultado da Consulta SQL. É definida qual classe será "mapeada" com o
+         resultado e quais campos serão usados -->
+    <sql-result-set-mapping name="rattingMovieMap">
+        <constructor-result target-class="com.guilhermepalma.exampleJPA.model.relations.manyToMany.Movie">
+            <column name="mediaRating" class="java.lang.Double"/>
+        </constructor-result>
+    </sql-result-set-mapping>
+
+</entity-mappings>
