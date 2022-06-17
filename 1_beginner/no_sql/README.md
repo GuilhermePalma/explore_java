@@ -23,3 +23,4 @@
 
 Alguns dos Bancos de Dados No SQL estudados:
 - [NoSQL - MongoDB](no_sql_mongodb.md)
+  - [Aggregation Mongo - Operações de Agregação](aggregate_mongodb.md)
