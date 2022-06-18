@@ -4,11 +4,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "product_order")
 public class Order {
 
     @Id
@@ -24,15 +24,15 @@ public class Order {
     @Column(nullable = false, name = "deliveryDate")
     private LocalDate deliveryDate;
 
-    @Column(nullable = false, name = "productList")
+    @ManyToMany
     @JoinTable(
-            name = "product_order_relationship",
+            name = "order_product_relationship",
             joinColumns = { @JoinColumn(name = "order_id") },
             inverseJoinColumns = { @JoinColumn(name = "product_id") }
     )
     private Set<Product> productList;
 
-    @Column(nullable = false, name = "customer")
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

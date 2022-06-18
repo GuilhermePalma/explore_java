@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./2_intermediary/streamExercices/data;MODE=MySQL  # URL com o Caminho do arquivo de Copia do Database
+    username: user                                                      # Usuario usado na Conexão com o Database
+    password: userPassword#421                                          # Senha usada na Conexão com o Database
+    driverClassName: org.h2.Driver                                      # Classe com o Driver do Database
+    initialization-mode: always                                         # Executa os Inserts só na criação do Database
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect  # Dialect (Idioma) do Database
+    hibernate.ddl-auto: update                                     # Permite re-estruturar o Database
+    defer-datasource-initialization: true                          # Cria a Estrutura Inicial do Database
+  h2:
+    console.enabled: true                               # Permite acessar o H2 Databse de Forma Online
+    spring.h2.console.settings.web-allow-others: false  # Não permite acessar o H2Console de Forma Remote
+  sql:
+    init.mode: always       # O "Scheme" do Database sepre será Gerado
