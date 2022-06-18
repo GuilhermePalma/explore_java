@@ -101,17 +101,27 @@ pelo Usuario))
 
 ### Stream
 
-Implementado no JDK 8, com um paradgmia funcional de forma paralela, isto é mais performance, facilidade e menos codigo
-para manipulação de grande quantidades de dados
+A `Stream API` foi um conjunto de funcionalidades implementadas no Java JDK 8, que permite trabalhar no Java com
+paradigmas da Programação Funcional. Além disso, traz operações que possam atuar de forma paralela, agregando uma maior
+performance, menos codigo e mais facilidade para manipulação de grandes quantidades de dados.
 
-Elas não manipulam os dados originais e sim retorna uma nova coleção com os dados alterados, conservando os valore
-soriginais e retornando os dados transformados
+Quando se fala de **Operações Paralelas**, significa que os itens serão processadas em um fluxo paralelo. Por exemplo:
+Foi escrito um codigo em que o fluxo possui um `peek` seguido de um `map`. Isso significa que o primeiro item irá
+realizar todo o fluxo (passar pelo `peek` e depois pelo `map`) para depois o item seguinte realizar as operações.
 
-Principais funcionalidades
+Dessa forma, para utilizar a `Stream API` é necessario que a `collection` que será utilizada implemente esse recurso.
+Normalmente, as classes (ex: `List`, `Set`) possuirão dentro de si um metodo que retornará uma instancia da `Stream API`
+baseada na classe e os seus valores.
+
+Por fim, um ponto fundamental da `Stream API` (e uma caracteristica da **Programação Funcional**) é a imutabilidade dos
+dados originais, isto é, será retornado uma nova `collection` ao inves de sobrescever os dados na `collection` original,
+conservando os valores originais e retornando os novos valores transformados.
+
+Principais funcionalidades:
 
 - `Map`: Retorna a mesma quantidade de dados, mas com um valor transformado
 - `Filter`: Retorna os dados correspondentes ao **filtro** aplicado
-- `forEach`: Executa uma operação (ou varias) para cada Item e não retorna nada
+- `ForEach`: Executa uma operação (ou varias) para cada Item e não retorna nada
 - `Peek`: Executa uma operação (ou varias) para cada Item retornando a coleção original
-- `Counting`:
-- `Grouping`:
+- `Count`: Retorna o número de Registros de uma `Collection`
+- `Group`: Permite o agrupamento de dados de uma `Collection` baseado em uma condição
