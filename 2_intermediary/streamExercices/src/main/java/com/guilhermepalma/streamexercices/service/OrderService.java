@@ -2,13 +2,16 @@ package com.guilhermepalma.streamexercices.service;
 
 import com.guilhermepalma.streamexercices.data.model.Customer;
 import com.guilhermepalma.streamexercices.data.model.Order;
+import com.guilhermepalma.streamexercices.data.model.Product;
 import com.guilhermepalma.streamexercices.data.repository.OrderRepository;
 import com.guilhermepalma.streamexercices.util.Util;
 import com.guilhermepalma.streamexercices.view.GridView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -28,7 +31,16 @@ public class OrderService {
      */
     public GridView<Order> getProductInOrderOfCustomer2() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        // Soma (1) no dia para Pegar o Intervalo Completo, do dia 01/02/2021 à 01/04/2021
+        LocalDate initialDate = LocalDate.of(2021, 2, 1 + 1);
+        LocalDate finalDate = LocalDate.of(2021, 4, 1 + 1);
+        List<Order> matches = results.stream()
+                .filter((value) -> value.getCustomer().getTier() == 2)
+                .filter((value) -> value.getOrderDate().isAfter(initialDate) && value.getOrderDate().isBefore(finalDate))
+                .collect(Collectors.toList());
+
+        return Util.isNullOrEmpty(matches) ? null : new GridView<>(matches, Long.valueOf(results.size()));
     }
 
     /**
@@ -36,7 +48,16 @@ public class OrderService {
      */
     public GridView<Order> getOrderWithBabyCategory() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        List<Order> matches = results.stream().filter((value) -> {
+            if (Util.isNullOrEmpty(value.getProductList())) return false;
+            Set<String> categoriesOfValue = value.getProductList().stream()
+                    .map(Product::getCategory)
+                    .collect(Collectors.toSet());
+            return categoriesOfValue.contains("Baby");
+        }).collect(Collectors.toList());
+
+        return Util.isNullOrEmpty(matches) ? null : new GridView<>(matches, Long.valueOf(results.size()));
     }
 
     /**
@@ -44,7 +65,13 @@ public class OrderService {
      */
     public GridView<Order> getTreeRecentOrder() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        List<Order> matches = results.stream()
+                .sorted(Comparator.comparing(Order::getOrderDate))
+                .limit(3L)
+                .collect(Collectors.toList());
+
+        return Util.isNullOrEmpty(matches) ? null : new GridView<>(matches, Long.valueOf(results.size()));
     }
 
     /**
@@ -53,67 +80,80 @@ public class OrderService {
      */
     public GridView<Order> getOrderOfSpecifyDayAndPrintAndReturnProducts() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        LocalDate specifyDate = LocalDate.of(2021, 3, 15);
+        List<Order> matches = results.stream()
+                .filter((value) -> value.getOrderDate().equals(specifyDate))
+                .peek(System.out::println).collect(Collectors.toList());
+
+        return Util.isNullOrEmpty(matches) ? null : new GridView<>(matches, Long.valueOf(results.size()));
     }
 
     /**
      * Exercice 8: Calcule o Valor Total de Todos os Pedidos em "Feb 2021"
      */
-    public GridView<Order> calValuesOfOrderInFeb2021() {
+    public Double calValuesOfOrderInFeb2021() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        return results.stream()
+                .filter((value) -> value.getOrderDate().getMonthValue() == 2 && value.getOrderDate().getYear() == 2021)
+                .mapToDouble((value -> value.getProductList().stream().mapToDouble(Product::getPrice).sum()))
+                .sum();
     }
 
     /**
      * Exercice 9: Calcule o valor medio pago nas {@link Order}  de "14-Mar-2021"
      */
-    public GridView<Order> getAverageValueInOrderInSpecifyDay() {
+    public OptionalDouble getAverageValueInOrderInSpecifyDay() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        LocalDate specifyDate = LocalDate.of(2021, 3, 14);
+
+        return results.stream()
+                .filter(value -> value.getOrderDate().equals(specifyDate))
+                .mapToDouble((value -> value.getProductList().stream().mapToDouble(Product::getPrice).sum()))
+                .average();
     }
 
     /**
      * Exercice 11: Obtenha um mapeamento de dados (Map) com o ID da {@link Order} e a quantidade ("count") de
      * {@link com.guilhermepalma.streamexercices.data.model.Product}
      */
-    public GridView<Order> getMapWithOrderAndQuantityOfProducts() {
+    public GridView<Map<Long, Integer>> getMapWithOrderAndQuantityOfProducts() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        Map<Long, Integer> matches = results.stream()
+                .collect(Collectors.toMap(Order::getId, e -> e.getProductList().size()));
+
+        return Util.isNullOrEmpty(matches) ? null : new GridView<>(Collections.singletonList(matches), Long.valueOf(results.size()));
     }
 
     /**
      * Exercice 12: Produza um mapeamento de dados (Map) com os registros das {@link Order} agrupados pelos
      * {@link Customer}
      */
-    public GridView<Order> getMapWithGroupByCustomer() {
+    public GridView<Map<Long, List<Order>>> getMapWithGroupByCustomer() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+
+        Map<Long, List<Order>> matches = results.stream().collect(Collectors.groupingBy(e -> e.getCustomer().getId()));
+
+        return Util.isNullOrEmpty(matches) ? null : new GridView<>(Collections.singletonList(matches), Long.valueOf(results.size()));
     }
 
     /**
      * Exercice 13: Produza um mapeamento de dados (Map) com o ID da {@link Order} e o valor total dos
      * {@link com.guilhermepalma.streamexercices.data.model.Product}
      */
-    public GridView<Order> getMapWithRegistersAndTotalValue() {
+    public GridView<Map<Long, Double>> getMapWithRegistersAndTotalValue() {
         List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
-    }
 
-    /**
-     * Exercice 14: Obtenha um mapeamento de dados (Map) com uma Lista de nomes de
-     * {@link com.guilhermepalma.streamexercices.data.model.Product} por Categoria
-     */
-    public GridView<Order> getMapWithProductNameByCategory() {
-        List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
-    }
+        Map<Long, Double> matches = results.stream()
+                .collect(Collectors.toMap(
+                        Order::getId,
+                        e -> e.getProductList().stream().mapToDouble(Product::getPrice).sum())
+                );
 
-    /**
-     * Exercice 15: Obtenha o {@link com.guilhermepalma.streamexercices.data.model.Product} mais caro de cada Categoria
-     */
-    public GridView<Order> getProductMoreExpansiveByCategory() {
-        List<Order> results = orderRepository.findAll();
-        return Util.isNullOrEmpty(results) ? null : new GridView<>(results, Long.valueOf(results.size()));
+        return Util.isNullOrEmpty(matches) ? null : new GridView<>(Collections.singletonList(matches), Long.valueOf(results.size()));
     }
 
 }
