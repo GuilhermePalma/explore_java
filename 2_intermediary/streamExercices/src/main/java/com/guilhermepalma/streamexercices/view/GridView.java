@@ -4,6 +4,8 @@ import com.guilhermepalma.streamexercices.util.Util;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -15,6 +17,11 @@ public class GridView<T> {
 
     public GridView(List<T> values, Long total) {
         this.values = values;
+        this.total = new TotalView(total);
+    }
+
+    public GridView(T value, Long total) {
+        this.values = Collections.singletonList(value);
         this.total = new TotalView(total);
     }
 

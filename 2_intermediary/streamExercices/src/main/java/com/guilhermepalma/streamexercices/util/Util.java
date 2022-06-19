@@ -9,6 +9,10 @@ public class Util {
         return value == null;
     }
 
+    public static <T> boolean isNullOrEmpty(String stringValue){
+        return isNull(stringValue) || stringValue.isEmpty();
+    }
+
     public static <T> boolean isNullOrEmpty(Collection<T> collection){
         return isNull(collection) || collection.isEmpty();
     }
