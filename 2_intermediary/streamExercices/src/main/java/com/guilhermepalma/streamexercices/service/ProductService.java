@@ -8,7 +8,10 @@ import com.guilhermepalma.streamexercices.view.GridView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -97,33 +100,17 @@ public class ProductService {
     /**
      * Exercice 15: Obtenha o {@link com.guilhermepalma.streamexercices.data.model.Product} mais caro de cada Categoria
      */
-    public GridView<Map<String, Product>> getProductMoreExpansiveByCategory() {
+    public GridView<Map<String, String>> getProductMoreExpansiveByCategory() {
         List<Product> results = productRepository.findAll();
 
-        /*Forma Inicial Impementada, mas não utilizada
-        Map<String, Product> matches = results.stream()
-                .collect(Collectors.groupingBy(Product::getCategory))
-                .values().stream()
-                .collect(Collectors.toMap(
-                        v -> v.stream().max(Comparator.comparingDouble(Product::getPrice))
-                                .orElse(new Product()).getCategory(),
-                        v -> v.stream().max(Comparator.comparingDouble(Product::getPrice))
-                                .orElse(new Product()))
-                );*/
-
-        Map<String, Optional<Product>> grouppingResults = results.stream().collect(Collectors.groupingBy(
+        Map<String, String> matches = results.stream().collect(Collectors.groupingBy(
                 Product::getCategory,
-                Collectors.maxBy(Comparator.comparingDouble(Product::getPrice))
+                // Executa uma Obteração de Collector e depois manipula o Resultado Final
+                Collectors.collectingAndThen(
+                        Collectors.maxBy(Comparator.comparingDouble(Product::getPrice)),
+                        optionalValue -> optionalValue.map(Product::getName).orElse(null)
+                )
         ));
-
-        Map<String, Product> matches = new HashMap<>();
-        grouppingResults.forEach((key, value) -> {
-            boolean invalidKey = Util.isNull(key) || key.isEmpty();
-            boolean invalidValue = Util.isNull(value) || !value.isPresent();
-
-            if (invalidKey || invalidValue) grouppingResults.remove(key, value);
-            else matches.put(key, value.get());
-        });
 
         return new GridView<>(matches, Long.valueOf(results.size()));
     }
