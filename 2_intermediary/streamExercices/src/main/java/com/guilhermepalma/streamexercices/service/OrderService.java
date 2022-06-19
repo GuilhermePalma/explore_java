@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,15 +30,17 @@ public class OrderService {
      * Exercice 4: Obtenha uma lista de {@link  com.guilhermepalma.streamexercices.data.model.Product}
      * encomendados pelo Tier=2 entre 01-Feb-2021 e 01-Apr-2021
      */
-    public GridView<Order> getProductInOrderOfCustomer2() {
+    public GridView<Product> getProductInOrderOfCustomer2() {
         List<Order> results = orderRepository.findAll();
 
         // Soma (1) no dia para Pegar o Intervalo Completo, do dia 01/02/2021 à 01/04/2021
         LocalDate initialDate = LocalDate.of(2021, 2, 1 + 1);
         LocalDate finalDate = LocalDate.of(2021, 4, 1 + 1);
-        List<Order> matches = results.stream()
+        List<Product> matches = results.stream()
                 .filter((value) -> value.getCustomer().getTier() == 2)
                 .filter((value) -> value.getOrderDate().isAfter(initialDate) && value.getOrderDate().isBefore(finalDate))
+                .flatMap(value -> value.getProductList().stream())
+                .distinct()
                 .collect(Collectors.toList());
 
         return Util.isNullOrEmpty(matches) ? null : new GridView<>(matches, Long.valueOf(results.size()));
@@ -66,8 +69,9 @@ public class OrderService {
     public GridView<Order> getTreeRecentOrder() {
         List<Order> results = orderRepository.findAll();
 
+        // Obtem as Dadas na Ordem Decrescente (Menor data para a maior = Mais Recente)
         List<Order> matches = results.stream()
-                .sorted(Comparator.comparing(Order::getOrderDate))
+                .sorted(Comparator.comparing(Order::getOrderDate).reversed())
                 .limit(3L)
                 .collect(Collectors.toList());
 
@@ -78,13 +82,16 @@ public class OrderService {
      * Exercice 7: Obtenha uma lista de {@link Order}  do dia "15-Mar-2021", Imprima os Valores no Console e devolva a
      * Lista de {@link com.guilhermepalma.streamexercices.data.model.Product}
      */
-    public GridView<Order> getOrderOfSpecifyDayAndPrintAndReturnProducts() {
+    public GridView<Product> getOrderOfSpecifyDayAndPrintAndReturnProducts() {
         List<Order> results = orderRepository.findAll();
 
         LocalDate specifyDate = LocalDate.of(2021, 3, 15);
-        List<Order> matches = results.stream()
+        List<Product> matches = results.stream()
                 .filter((value) -> value.getOrderDate().equals(specifyDate))
-                .peek(System.out::println).collect(Collectors.toList());
+                .flatMap(value -> value.getProductList().stream())
+                .distinct()
+                .peek(System.out::println)
+                .collect(Collectors.toList());
 
         return Util.isNullOrEmpty(matches) ? null : new GridView<>(matches, Long.valueOf(results.size()));
     }
@@ -107,11 +114,12 @@ public class OrderService {
     public OptionalDouble getAverageValueInOrderInSpecifyDay() {
         List<Order> results = orderRepository.findAll();
 
-        LocalDate specifyDate = LocalDate.of(2021, 3, 14);
-
+        // Obtem a Lista de Valores Unicos e Faz uma media dos Valores
+        LocalDate specifyDate = LocalDate.of(2021, 3, 15);
         return results.stream()
                 .filter(value -> value.getOrderDate().equals(specifyDate))
-                .mapToDouble((value -> value.getProductList().stream().mapToDouble(Product::getPrice).sum()))
+                .flatMap(value -> value.getProductList().stream())
+                .mapToDouble(Product::getPrice)
                 .average();
     }
 
@@ -132,16 +140,16 @@ public class OrderService {
      * Exercice 12: Produza um mapeamento de dados (Map) com os registros das {@link Order} agrupados pelos
      * {@link Customer}
      */
-    public GridView<Map<Long, List<Order>>> getMapWithGroupByCustomer() {
+    public GridView<Map<Customer, List<Order>>> getMapWithGroupByCustomer() {
         List<Order> results = orderRepository.findAll();
 
-        Map<Long, List<Order>> matches = results.stream().collect(Collectors.groupingBy(e -> e.getCustomer().getId()));
+        Map<Customer, List<Order>> matches = results.stream().collect(Collectors.groupingBy(Order::getCustomer));
 
         return Util.isNullOrEmpty(matches) ? null : new GridView<>(Collections.singletonList(matches), Long.valueOf(results.size()));
     }
 
     /**
-     * Exercice 13: Produza um mapeamento de dados (Map) com o ID da {@link Order} e o valor total dos
+     * Exercice 13: Produza um mapeamento de dados (Map) com a {@link Order} e o valor total dos
      * {@link com.guilhermepalma.streamexercices.data.model.Product}
      */
     public GridView<Map<Long, Double>> getMapWithRegistersAndTotalValue() {

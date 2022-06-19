@@ -24,7 +24,7 @@ public class Order {
     @Column(nullable = false, name = "deliveryDate")
     private LocalDate deliveryDate;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "order_product_relationship",
             joinColumns = { @JoinColumn(name = "order_id") },
@@ -32,7 +32,7 @@ public class Order {
     )
     private Set<Product> productList;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
