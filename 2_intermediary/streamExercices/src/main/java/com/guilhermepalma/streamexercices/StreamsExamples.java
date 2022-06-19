@@ -1,4 +1,4 @@
-package com.guilhermepalma.streams;
+package com.guilhermepalma.streamexercices;
 
 import java.util.*;
 import java.util.stream.Collectors;
