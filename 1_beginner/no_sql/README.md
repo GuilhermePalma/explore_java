@@ -27,4 +27,4 @@
 
 ---
 
-[🍵 Voltar ao Conteudo Iniciante](./README.md)
+[🍵 Voltar ao Conteudo Iniciante](../README.md)

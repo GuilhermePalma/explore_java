@@ -6,4 +6,4 @@
 
 ---
 
-[🫖 Voltar ao Conteudo Intermediario](./README.md)
+[🫖 Voltar ao Conteudo Intermediario](../README.md)

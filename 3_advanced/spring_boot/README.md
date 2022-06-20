@@ -7,4 +7,4 @@
 
 ---
 
-[🧉 Voltar ao Conteudo Avançado](./README.md)
+[🧉 Voltar ao Conteudo Avançado](../README.md)
