@@ -6,9 +6,16 @@
 
 ### Conteudos
 
-- [Conteudo Iniciante: NoSQL, Java, SpringBoot](1_beginner/README.md)
-- [Conteudo Intermediario: NoSQL, Java, SpringBoot](2_intermediary/README.md)
-- [Conteudo Avançado: SpringBoot](3_advanced/README.md)
+- [Conteudo Iniciante](1_beginner/README.md)
+    - [Conteudo Iniciante: NoSQL](1_beginner/no_sql/README.md)
+    - [Conteudo Iniciante: Java](1_beginner/java/README.md)
+    - [Conteudo Iniciante: Spring Boot](1_beginner/spring_boot/README.md)
+- [Conteudo Intermediario](2_intermediary/README.md)
+    - [Conteudo Intermediario: NoSQL](2_intermediary/no_sql/README.md)
+    - [Conteudo Intermediario: Java](2_intermediary/java/README.md)
+    - [Conteudo Intermediario: Spring Boot](2_intermediary/spring_boot/README.md)
+- [Conteudo Avançado](3_advanced/README.md)
+    - [Conteudo Avançado: SpringBoot](3_advanced/spring_boot/README.md)
 
 ### Como Executar
 
