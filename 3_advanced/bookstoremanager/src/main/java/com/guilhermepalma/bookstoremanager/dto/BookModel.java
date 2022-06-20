@@ -1,26 +1,35 @@
 package com.guilhermepalma.bookstoremanager.dto;
 
+import com.guilhermepalma.bookstoremanager.entity.Author;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Transient;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+/**
+ * Classe Responsavel por Servir de Modelo e Fazer a Validação dos Itens
+ */
+@Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookDTO {
+public class BookModel {
+
     @Id
     private Long id;
 
     @NotBlank
-    @Length(max = 200)
+    @Size(max = 200)
     private String name;
 
     @NotNull
@@ -30,15 +39,14 @@ public class BookDTO {
     private String chapter;
 
     @NotBlank
-    @Length(max = 13)
     private String isbn;
 
     @NotBlank
-    @Length(max = 200)
+    @Size(max = 200)
     private String publisherName;
 
     @Valid
     @NotNull
-    private AuthorDTO author;
-
+    @OneToOne
+    private AuthorModel author;
 }

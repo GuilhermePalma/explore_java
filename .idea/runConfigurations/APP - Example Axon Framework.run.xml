@@ -1,6 +1,5 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="APP - Example Axon Framework" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="exampleAxonFramework" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.guilhermepalma.exampleaxonframework.*" />
