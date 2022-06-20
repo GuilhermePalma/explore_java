@@ -1,10 +1,11 @@
 spring:
   datasource:
-    url: jdbc:h2:file:./2_intermediary/streamExercices/data;MODE=MySQL  # URL com o Caminho do arquivo de Copia do Database
-    username: user                                                      # Usuario usado na Conexao com o Database
-    password: userPassword#421                                          # Senha usada na Conexao com o Database
-    driverClassName: org.h2.Driver                                      # Classe com o Driver do Database
-    initialization-mode: always                                         # Executa os Inserts na criacao do Database
+    # URL com o Caminho do arquivo de Copia do Database
+    url: jdbc:h2:file:./2_intermediary/spring_boot/streamExercices/data;MODE=MySQL
+    username: user                    # Usuario usado na Conexao com o Database
+    password: userPassword#421        # Senha usada na Conexao com o Database
+    driverClassName: org.h2.Driver    # Classe com o Driver do Database
+    initialization-mode: always       # Executa os Inserts na criacao do Database
   jpa:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect  # Dialect (Idioma) do Database
     hibernate.ddl-auto: update                                     # Permite re-estruturar o Database
