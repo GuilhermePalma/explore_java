@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="APP - Example Axon Framework" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.guilhermepalma.exampleaxonframework.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.guilhermepalma.exampleaxonframework.ExampleAxonFrameworkApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
