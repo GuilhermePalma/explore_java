@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    #url: jdbc:h2:file:./data-test;MODE=MySQL
+    url: jdbc:h2:mem:database_testing;MODE=MySQL
+    username: userTest
+    password: userPassword#421
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate.ddl-auto: create-drop
+  h2:
+    console.enabled: true
+    spring.h2.console.settings.web-allow-others: false

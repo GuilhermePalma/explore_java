@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="APP - Stream Exercices" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.guilhermepalma.streamexercices.StreamExercicesApplication" />
+    <module name="streamexercices" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
