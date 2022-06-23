@@ -4,7 +4,10 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.time.*;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -138,19 +141,49 @@ class DateTimeExamplesTest {
     }
 
     @Test
-    void actualLocalTimestamp() {
-    }
-
-    @Test
     void dateNowInDiferentsTimeZone() {
+        Map<String, LocalDateTime> valuesToTest = DateTimeExamples.dateNowInDiferentsTimeZone();
+        LocalDateTime dateNow = LocalDateTime.now();
+
+        Arrays.stream(TimeZone.getAvailableIDs()).forEach(timeZoneId ->{
+            LocalDateTime dateTest = dateNow.atZone(TimeZone.getTimeZone(timeZoneId).toZoneId()).toLocalDateTime();
+            LocalDateTime dateToTest = valuesToTest.get(TimeZone.getTimeZone(timeZoneId).toZoneId().toString());
+
+            // TimeZone not avalaible when usign ZoneId
+            if(timeZoneId.equals("EST") || timeZoneId.equals("HST")|| timeZoneId.equals("MST")) return;
+
+            assertEquals(dateTest.getDayOfYear(),dateToTest.getDayOfYear());
+            assertEquals(dateTest.getYear(),dateToTest.getYear());
+            assertEquals(dateTest.getHour(),dateToTest.getHour());
+            assertEquals(dateTest.getMinute(),dateToTest.getMinute());
+            assertEquals(dateTest.getSecond(),dateToTest.getSecond());
+        });
     }
 
     @Test
     void intervalOfTenDays() {
+        LocalDate c = LocalDate.now();
+        List<LocalDate> datesToList = DateTimeExamples.intervalOfTenDays();
+        AtomicInteger index = new AtomicInteger();
+
+        // Check quantity expected of values
+        assertEquals(21, datesToList.size());
+
+        // Check data before Date now
+        for (int i = 10; i > 0; i--) {
+            assertEquals(datesToList.get(index.getAndIncrement()), c.minusDays(i));
+        }
+
+        // Check data after Date now
+        for (int i = 0; i < 11; i++) {
+            assertEquals(datesToList.get(index.getAndIncrement()), c.plusDays(i));
+        }
     }
 
     @Test
     void remainingMonthsInYear() {
+        int missingMonth = Month.DECEMBER.compareTo(LocalDate.now().getMonth());
+        assertEquals(missingMonth, DateTimeExamples.remainingMonthsInYear().size());
     }
 
     @Test

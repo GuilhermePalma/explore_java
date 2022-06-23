@@ -1,6 +1,7 @@
 package com.guilhermepalma;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.*;
 import java.util.*;
 
@@ -185,24 +186,44 @@ public class DateTimeExamples {
         return year.isLeap();
     }
 
-    // 20. Escreva um programa Java para obter o timestamp atual.
-    public static Time actualLocalTimestamp() {
-        return null;
-    }
-
     // 21. Escreva um programa Java para obter a hora atual em todos os fusos horários disponíveis.
-    public static Map<String, Date> dateNowInDiferentsTimeZone() {
-        return null;
+    public static Map<String, LocalDateTime> dateNowInDiferentsTimeZone() {
+        Map<String, LocalDateTime> list = new HashMap<>();
+        LocalDateTime dateNow = LocalDateTime.now();
+        ZoneId.getAvailableZoneIds().forEach(value -> list.put(TimeZone.getTimeZone(value).getID(), dateNow));
+        return list;
     }
 
     // 22. Escreva um programa Java para obter as datas 10 dias antes e depois de hoje.
-    public static List<Date> intervalOfTenDays(LocalDate dateNow) {
-        return null;
+    public static List<LocalDate> intervalOfTenDays() {
+        List<LocalDate> dates = new ArrayList<>();
+
+        final Calendar calendar = Calendar.getInstance();
+        final int actualDay = calendar.get(Calendar.DAY_OF_YEAR);
+
+       for (int i = -10; i < 1; i++) {
+            calendar.set(Calendar.DAY_OF_YEAR, actualDay + i);
+            dates.add(new java.sql.Date(calendar.getTime().getTime()).toLocalDate());
+        }
+
+        for (int i = 1; i < 11; i++) {
+            calendar.set(Calendar.DAY_OF_YEAR, actualDay + i);
+            dates.add(new java.sql.Date(calendar.getTime().getTime()).toLocalDate());
+        }
+
+        return dates;
     }
 
     // 23. Escreva um programa Java para obter os meses restantes do ano.
     public static List<String> remainingMonthsInYear() {
-        return null;
+        Month actualMonth = LocalDate.now().getMonth();
+
+        List<String> values = new ArrayList<>();
+        for (int i =actualMonth.getValue() +1; i < 13; i++) {
+            values.add(Month.of(i).toString());
+        }
+
+        return values;
     }
 
     // 24. Escreva um programa Java para exibir as datas nos seguintes formatos.
