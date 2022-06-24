@@ -8,6 +8,8 @@ public class DateUtil {
 
     /**
      * Transforma uma {@link LocalDate} em {@link String}
+     *
+     * @return {@link String}
      */
     public static String dateToString(LocalDate localDate) throws DateTimeException {
         return localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -15,6 +17,8 @@ public class DateUtil {
 
     /**
      * Converte uma Data no Formato "dd/MM/yyyy" ou "dd-MM-yyyy" para uma {@link LocalDate}
+     *
+     * @return {@link LocalDate}
      */
     public static LocalDate stringToAmericanDate(String date) {
         if (!validStringDate(date)) return null;
@@ -25,6 +29,8 @@ public class DateUtil {
 
     /**
      * Valida se a Data segue o padrão estipulado para o Projeto
+     *
+     * @return {@link Boolean}
      */
     public static boolean validStringDate(String date) {
         if (date == null || date.isEmpty()) return false;
