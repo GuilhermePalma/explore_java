@@ -4,11 +4,11 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.time.*;
-import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalUnit;
+import java.time.temporal.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.time.DayOfWeek.MONDAY;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DateTimeExamplesTest {
@@ -187,14 +187,38 @@ class DateTimeExamplesTest {
     }
 
     @Test
-    void formatDateInString() {
-    }
-
-    @Test
     void durationPerMonth() {
+        Year yearTest = Year.now();
+        assertEquals(yearTest.getValue(),LocalDate.now().getYear());
+
+        Map<String, Integer> monthDays = DateTimeExamples.durationPerMonth(yearTest);
+
+        assertEquals(12, monthDays.size());
+
+        for (int i = 1; i < 13; i++) {
+            YearMonth monthToTest = YearMonth.of(yearTest.getValue(), i);
+            String month = monthToTest.getMonth().toString();
+
+            assertTrue(monthDays.containsKey(month));
+            assertEquals(monthToTest.lengthOfMonth(), monthDays.get(month));
+        }
     }
 
     @Test
     void listAllMondaysInMonth() {
+        Set<LocalDate> dateToTest =DateTimeExamples.listAllMondaysInMonth(Calendar.AUGUST);
+
+        LocalDate startDate = LocalDate.of(Year.now().getValue(), Month.AUGUST, 1);
+        LocalDate endDate = LocalDate.of(Year.now().getValue(), Month.SEPTEMBER, 1);
+
+        List<LocalDate> listWithDates = new ArrayList<>();
+        LocalDate thisMonday = startDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
+        while (thisMonday.isBefore(endDate)) {
+            listWithDates.add(thisMonday);
+            thisMonday = thisMonday.plusWeeks(1);
+        }
+
+        assertEquals(listWithDates.size(), dateToTest.size());
+        listWithDates.forEach(value -> assertTrue(dateToTest.contains(value)));
     }
 }
