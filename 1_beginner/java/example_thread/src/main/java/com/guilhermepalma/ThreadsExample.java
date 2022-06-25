@@ -2,7 +2,6 @@ package com.guilhermepalma;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadsExample {
@@ -42,6 +41,11 @@ public class ThreadsExample {
 
         // Threads sendo executadas paralelamente
         System.out.println("\n---------\nExecução de Threads (Paralelamente)\n---------\n");
+
+        // Thread One terá prioridade para ser Executada
+        threadOne.setPriority(Thread.MAX_PRIORITY);
+        threadTwo.setPriority(Thread.NORM_PRIORITY);
+
         threadOne.start();
         threadTwo.start();
 
@@ -66,8 +70,8 @@ public class ThreadsExample {
         System.out.println("Thread Two is Alive: " + threadTwo.isAlive());
     }
 
-    private static String dateNow(){
-       return Timestamp.from(Instant.now()).toString();
+    private static String dateNow() {
+        return Timestamp.from(Instant.now()).toString();
     }
 
 }
