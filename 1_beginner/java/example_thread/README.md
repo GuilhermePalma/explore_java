@@ -65,3 +65,8 @@ Os metodos `notify` e `await` faz com que seja possivel acompanhar o estado de u
 - `.notifyAll()`: Mesma função do `.notify`, mas notifica todas as Threads
 
 *Obs: Para ter acesso aos metodos acima é necesario usar o `syncronized`
+
+### Deadlock
+
+Se trata do bloqueio de um recurso que outro processo/recurso tambem iria utilizar. Para resolver é recomendado
+utilizar os metodos `notify`, `await` e `syncronized` para controlar o campartilhamento dos recursos
