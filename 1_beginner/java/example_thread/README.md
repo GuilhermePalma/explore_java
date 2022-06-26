@@ -55,3 +55,13 @@ que possui exemplos de chamadas do metodo ``printTable`` da Classe
 [Table](src/main/java/com/guilhermepalma/syncronized/SyncronizedThreads.java). Esse metodo é marcado pela keyword
 `syncronized`, ou seja, uma tabela será inteirametne impressa em uma Thread para que depois a proxima Thread
 imprima a sua
+
+### Notify e Await
+
+Os metodos `notify` e `await` faz com que seja possivel acompanhar o estado de um recurso compartilhado entre Threads.
+
+- `.wait()`: Coloca a Thread em espera, bloqueabdo a sua execução até ser _notificada_ para voltar a execução
+- `.notify()`: Notifica a Thread que estava em espera para voltar a execução
+- `.notifyAll()`: Mesma função do `.notify`, mas notifica todas as Threads
+
+*Obs: Para ter acesso aos metodos acima é necesario usar o `syncronized`
