@@ -38,7 +38,11 @@ uma sequência de estágios que realiza transformações nos dados.
 
 Dessa forma, dentro do `pipeline`, a cada `step` que o dado passa eles são transformados (ex: campos são criados ou
 removidos, os documentos são agrupados, etc). Esse é um ponto importante ao criar o `pipeline`: sempre montar um fluxo
-considerando os dados após passar pela `step` anterior - e tambem o resultado transformação sofrida nela.
+considerando os dados após passar pela `step` anterior - e tambem o resultado da transformação sofrida nela.
+
+Os `pipelines` são executados por meio do comando `db.nameCollection.agregate()`, podendo receber apenas uma
+unica `step` (ex: `{ $match: { key: "value to find" } }`) ou um array com mais de uma `step` (utilizando o exemplo
+anterior, basta envolver com `[]`)
 
 Alguns `steps` disponivies para o pipeline de agregação são:
 

@@ -88,25 +88,6 @@ MongoDB
 - `db.nameCollection.remove({_id: hashID})`: Remove o Item/Documento de uma Collection com o `_id` informado
     - `db.nameCollection.remove({keu : {$param :value}})`: Exclui todos os Valores com o `value` informado
 
-### Consultas Agregadas
-
-- Pipes (Tubulações) and Filters (Filtros)
-    - Os Filtors são responsavel por Transformar os Dados
-    - Os Dados Transformados são passados e transformados por cada Filtro
-- `db.nameCollection.aggregate()`
-    - `db.nameCollection.aggregate({$match: {key: value}})`: Busca os Itens/Documentos com os `key` e `value` informados
-        - Seria um Filtro +- como `Where`
-    - `db.nameCollection.aggregate({$project: {key: 0}})`: Define quais Itens serão exibidos nos Resultados
-        - Valor `0` não exibe os itens, já o `1` exibe
-    - `db.nameCollection.aggregate({$addFields: {key: value}})`: Adiciona Campos no Resultado da Consulta
-    - `db.nameCollection.aggregate({$sort: {key: value}})`: Ordena os Resultados em Ordem Crescente ou Decrescente
-        - Caso o `value` seja `1`, a ordenção será por ordem Crescente. Mas se o `value` for `-1`, a ordenação será por
-          ordem Decrescente
-    - `db.nameCollection.aggregate({$unwind: {key: value}})`: "Desenrola"/Separa os Resultados em Itens/Documentos
-- Quando se Manipula Dados dentro de Dados (Ex: `{key: {keyTwo: valueTwo}}`), é necessario colocar os campos entre aspas
-    - Ex: `db.nameCollection.find({"key.keyTwo"})`
-    - Quando quer se utilizar no lado do valor, é necessario adicionar o `$` antes
-
 ### Indexes
 
 São utilizados para obter documentos do banco de dados de maneira mais rapida. Esse processo é feito por um
