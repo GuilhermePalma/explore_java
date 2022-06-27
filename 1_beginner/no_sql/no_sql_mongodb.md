@@ -1,4 +1,4 @@
-#  MongoDB
+# MongoDB
 
 Esquema que Representa o **MongoDB**
 
@@ -106,3 +106,21 @@ MongoDB
 - Quando se Manipula Dados dentro de Dados (Ex: `{key: {keyTwo: valueTwo}}`), é necessario colocar os campos entre aspas
     - Ex: `db.nameCollection.find({"key.keyTwo"})`
     - Quando quer se utilizar no lado do valor, é necessario adicionar o `$` antes
+
+### Indexes
+
+São utilizados para obter documentos do banco de dados de maneira mais rapida. Esse processo é feito por um
+mapeamento criado pelo mongo a partir de uma ou varias chaves existentes nos documentos. As combinações dos valores
+dessas chaves são agrupados em metadados.
+
+Durante o processo de criação, o mongo pode levar um certo tempo para mapear cada documento, mas após isso, as pesquisas
+utilizanod os `indexes` criados serão mais rapidas e otimizadas
+
+- `db.nameCollection.getIndexes()`: Obtem os `Indexes` de uma `Collection`
+- `db.nameCollection.createIndex({key: SORT})`: Cria um `Index`
+    - `key`: Chave usada para o `Index` (Pode ser uma ou varias)
+    - `SORT`: Ordenação dos documentos na criação dos `Index`, assumindo `1` (crescente (ex: A --> Z)) ou `-1` (
+      decrescente (ex: Z --> A)) como valores
+- `db.nameCollection.dropIndex(key)`: Exclui um `Index` da `Collection`
+    - `key`: Chave do `Index`
+- `db.nameCollection.dropIndexes()`: Exclui todos os `Indexes` de um `Collection`, com exceção do `_id`
