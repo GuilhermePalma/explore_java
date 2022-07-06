@@ -5,6 +5,7 @@
 - Anotações
     - [Anotações sobre o Spring Boot](anotacoes_introdutorias.md)
     - [Anotações sobre Arquitetura do Spring Boot](architeture.md)
+    - [Anotações sobre Beans](beans.md)
 - APIs e Projetos
     - [API com Exemplos de Request e Operações: simpleRequestAPI](simpleRequestAPI/README.md)
 
