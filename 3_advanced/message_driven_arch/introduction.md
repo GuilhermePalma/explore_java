@@ -20,18 +20,18 @@ O `Message Broker` sempre terá o conceito de centralizar e gerir os eventos, ma
 podem variar conforme a necessidade da aplicação. Os principais são:
 
 - Padrão FIFO: Seria a implementação de uma fila de Eventos, em que o Primeiro evento a entrar (First In), seria o
-  primeiro a ser consumido (First Out). Nesse padrão é comum ter um unico Publicador e Consumidor de eventos
+  primeiro a ser consumido (First Out). Nesse padrão, o evento é distribuido entre os Consumidores
 - Padrão Point-To-Point: Tambem utiliza a implementação de fila, mas o evento Publicado tem como destino um Serviço
   Especifico. É possivel utilizar dois principais Fluxos:
     - `Fire-and-Forget`: Somente envia o evento e aguara a confirmação do recebimento peço `Message Broker`
     - `Request/Reply`: Ao enviar um evento, é aguardado uma resposta como resultado. Nesse caso é necessario ter um
-      fluxo
-      de envio e outro para recebimento da resposta
+      fluxo de envio e outro para recebimento da resposta
 - Padrão Publish/Subscriber: Nesse padrão, é possivel ter varios Publicadores de Eventos (`Publisher`) responsaveis pelo
   envio de eventos para determinados grupos do `Message Broker`. O `Message Broker` possui varios
   Assinantes (`Subscribers`) divididos em grupos e conectados nele para processar os eventos conforme o Grupo do Evento.
     - Um evento pode ser consumido de diferentes maneiras:
-        - Varios `Subscribers` processarem um mesmo evento, mas em serviços diferentes
+        - O evento é replicado aos `Subscribers` daquele grupo. Os `Subscriver` processarem um mesmo evento, mas em
+          serviços diferentes
         - Processado apenas pelo 1° `Subscribers`
         - Processado varias vezez
 
@@ -44,10 +44,10 @@ Alguns dos Softwares que permitem implementar essa arquiterua são:
   organizados em grupos, possuindo um prazo para serem retirados do armazenamento
 - RabbitMQ: Projeto Open Source que utiliza o Protocolo AMQP, fazendo com que apenas um `Subscriber` consuma o evento
 - Kafka: Plataforma Open Source com bastante utilização no mercado que implementa o padrão `Sub/Pub`, entregando uma
-  alta disponibilidade (varias instancias), escalabilidade e podendo aramazenar os eventos em disco. Permite
-  utilizar `System Registry`, para definir nos `Subscriber` o tipo do dado que é esperado receber pelo `Publisher`.
-  Tambem permite implementar o protocolo de **Streaming de Eventos** e a integração com diversas aplicações, linguagens.
-  É possivel dividir os `Subscriber` em grupos, permitindo definir recursos especificos para cada grupo.
+  alta disponibilidade (varias instancias), escalabilidade e podendo aramazenar os eventos em disco.
+    - `System Registry`: define nos `Subscriber` o tipo do dado que é esperado receber pelo `Publisher`
+    - Suporte ao protocolo de **Streaming de Eventos** e a integração com diversas aplicações, linguagens.
+    - É possivel dividir os `Subscriber` em grupos, permitindo definir recursos especificos para cada grupo.
 
 | Vantagens                                                                                           | Desvantagens                                           |
 |-----------------------------------------------------------------------------------------------------|--------------------------------------------------------|
@@ -112,6 +112,7 @@ Alguns dos Softwares que permitem implementar essa arquiterua são:
 - Nesse padrão, é utilizada a Fila, ou seja, o Primeiro Evento à ser registrado, será o Primeiro Evento à ser processado
 - Pensar nessse padrão como se numa ponta existe um INPUT para os Eventos, no centro a Estrutura que mantem a FILA
   desses Eventos e na outra ponta o resultado do PROCESSAMENTO/Consumo do Evento
+- Os eventos são **distribuidos** entre os consumidores (Providers)
 - Caso não exista um Consumidor das Mensagens ou por algum motivo ele não esteja as processando, as mensagens não serão
   consumidas e só irão acumular
 
@@ -136,12 +137,15 @@ Alguns dos Softwares que permitem implementar essa arquiterua são:
       Factor Auth)
     - Todos os Subscribers de um Topico/Tipo receberão o mesmo evento enviado pelos Publisher
     - Os Publishers não estão atrelados à nehum Topico/Tipo do Message Broker
-    - Os Subscribers estão atrelados à um Topico/Tipo do Message Broker
+    - Os Subscribers estão atrelados a um Topico/Tipo do Message Broker.
+        - Como os Subscribers estarão monitorando um Topico/Tipo, todos receberão o mesmo evento, mas o processamento
+          diferirá (ex: um `Subscriber` de LOGs, outro de Notificações).
+        - Conceito de replicação do evento para os `Subscriber` daquele Topico/Tipo
     - Nessa Padrão pode ser arquitetado em diferentes formatos
         - Apenas o primeiro Subscriber pode consumir o evento
         - Varios Subscribers pode consumir esse evento
         - Os Subscribers consumirão varia vezes aquele evento
-    - Exemplo Pratico: Grupos de Chats. Para os usuarios que pertencem ao Grupo A (seria o Topico/Tipo do Message
+    - Exemplo Prático: Grupos de Chats. Para os usuarios que pertencem ao Grupo A (seria o Topico/Tipo do Message
       Broker) devems ser notificados (Subscriber) quando uma nova mensagem é enviada (Publisher)
 
 ### Durabilidade dos Eventos
