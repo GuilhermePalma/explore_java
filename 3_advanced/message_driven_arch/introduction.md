@@ -1,5 +1,61 @@
 # Conceitos de Mensageria
 
+### Resumo
+
+A mensageria se trata de sistemas distribuidos e independetes que se comunicam entre si. Para que essa comunicação
+ocorra, é necessário utilizar um centralizador: o `Message Broker`. Por meio dele é possivel registar, disponibilizar e
+consumir eventos. Alguns `Message Broker` permitem o armazene de eventos para serem processdados depois, como tambem a
+divisão do `Message Broker` em instâncias, permitindo com que caso ocorra algum erro numa instância outro servidor
+assuma o lugar mantendo o fluxo da aplicação. De forma semelhante, pode ocorrer nos eventos; caso um evento não consiga
+ser processado, o `Message Broker` pode solicitar o reprocessamento do evento.
+
+Como os eventos ficam centralizados no `Message Broker`, é possivel ter diversos sistemas independentes conectados nele,
+fazendo a publicação e/ou consumo de eventos sem saberem a Linguagem, o Dominio ou as Lógicas de Negócio do serviço.
+Esse servidor tambem gera LOGs e podem tambem armazenar os eventos, permitindo que numa situação de irregularidade dos
+dados, seja possivel reprocessar os eventos e voltar ao estado real da aplicação.
+
+Conceitos Gerais:
+
+O `Message Broker` sempre terá o conceito de centralizar e gerir os eventos, mas o padrão de mensageria seguido
+podem variar conforme a necessidade da aplicação. Os principais são:
+
+- Padrão FIFO: Seria a implementação de uma fila de Eventos, em que o Primeiro evento a entrar (First In), seria o
+  primeiro a ser consumido (First Out). Nesse padrão é comum ter um unico Publicador e Consumidor de eventos
+- Padrão Point-To-Point: Tambem utiliza a implementação de fila, mas o evento Publicado tem como destino um Serviço
+  Especifico. É possivel utilizar dois principais Fluxos:
+    - `Fire-and-Forget`: Somente envia o evento e aguara a confirmação do recebimento peço `Message Broker`
+    - `Request/Reply`: Ao enviar um evento, é aguardado uma resposta como resultado. Nesse caso é necessario ter um
+      fluxo
+      de envio e outro para recebimento da resposta
+- Padrão Publish/Subscriber: Nesse padrão, é possivel ter varios Publicadores de Eventos (`Publisher`) responsaveis pelo
+  envio de eventos para determinados grupos do `Message Broker`. O `Message Broker` possui varios
+  Assinantes (`Subscribers`) divididos em grupos e conectados nele para processar os eventos conforme o Grupo do Evento.
+    - Um evento pode ser consumido de diferentes maneiras:
+        - Varios `Subscribers` processarem um mesmo evento, mas em serviços diferentes
+        - Processado apenas pelo 1° `Subscribers`
+        - Processado varias vezez
+
+Alguns dos Softwares que permitem implementar essa arquiterua são:
+
+- AWS SNS: Sistema baseado em fazer `PUSH` (Envio) de eventos entre aplicações. Pode occorer no
+  formato `A2A` (`Application to Appplication`, comunicação entre Aplicações) ou `A2P` (`Application To Person`,
+  comunicação entre Aplicação e Usuario)
+- AWS SQS: Sistema semelhante ao `RabbitMQ`, fazendo `PULL` (Recebimento) de eventos. Os eventos são colocados em Filas,
+  organizados em grupos, possuindo um prazo para serem retirados do armazenamento
+- RabbitMQ: Projeto Open Source que utiliza o Protocolo AMQP, fazendo com que apenas um `Subscriber` consuma o evento
+- Kafka: Plataforma Open Source com bastante utilização no mercado que implementa o padrão `Sub/Pub`, entregando uma
+  alta disponibilidade (varias instancias), escalabilidade e podendo aramazenar os eventos em disco. Permite
+  utilizar `System Registry`, para definir nos `Subscriber` o tipo do dado que é esperado receber pelo `Publisher`.
+  Tambem permite implementar o protocolo de **Streaming de Eventos** e a integração com diversas aplicações, linguagens.
+  É possivel dividir os `Subscriber` em grupos, permitindo definir recursos especificos para cada grupo.
+
+| Vantagens                                                                                           | Desvantagens                                           |
+|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------|
+| Menor Acoplamento: Os servições não conhecem os demais serviços (Linguagens e Regras)               | Aumento da Complexidade da Arquitetura                 |
+| Escalabilidade: Serviços independentes, permite implementar/remover um serviço sem afetar os demais | Aumento na Complexidade de DEBUGs                      |
+| Por meio dos LOGs e Eventos armazenados no `Message Broker`, é possivel reprocessar os eventos      | Curva maior de Aprendizagem                            |
+|                                                                                                     | Adição de mais itens na Arquitetura (`Message Broker`) |
+
 ### Introdução
 
 - Microserviços: Estruturar aplicações como coleção de aplicaçõpes
@@ -82,9 +138,9 @@
     - Os Publishers não estão atrelados à nehum Topico/Tipo do Message Broker
     - Os Subscribers estão atrelados à um Topico/Tipo do Message Broker
     - Nessa Padrão pode ser arquitetado em diferentes formatos
-        - Apenas o primeiro Provider pode consumir o evento
-        - Varios Providers pode consumir esse evento
-        - Os Providers consumirão varia vezes aquele evento
+        - Apenas o primeiro Subscriber pode consumir o evento
+        - Varios Subscribers pode consumir esse evento
+        - Os Subscribers consumirão varia vezes aquele evento
     - Exemplo Pratico: Grupos de Chats. Para os usuarios que pertencem ao Grupo A (seria o Topico/Tipo do Message
       Broker) devems ser notificados (Subscriber) quando uma nova mensagem é enviada (Publisher)
 
@@ -136,19 +192,20 @@
       continuam a funcionar e consumindo os eventos
     - Processamento de Streaming Embutido
     - Scheme Registry: Como os dados trafegam em bytes pelo Kafka, existe um sistema para verificar se a mensagem
-      enviada pelo Publiser é a esperada pelos Providers
-        - Ex: Provider espera receber um JSON com determinado Campo. Então o Publisher deve seguir esse padrão
+      enviada pelo Publiser é a esperada pelos Subscribers
+        - Ex: Subscriber espera receber um JSON com determinado Campo. Então o Publisher deve seguir esse padrão
     - Possui interfaces que permitem integrar à diferente soluções
         - Diversas linguagens podem gerar eventos no Kafka
         - Existem Aplicações que recuperam informações e geram evento Kafka para recuperar o Estado de uma Aplicação
-    - Os Providers podem ser agrupados, permitindo com que defina isoladamente os parametros deles (Instancias,
+    - Os Subscribers podem ser agrupados, permitindo com que defina isoladamente os parametros deles (Instancias,
       Capacidades, etc)
 
 ### To-do List
 
-- [ ] Revisar Erros Ortograficos
+- [X] Revisar Erros Ortograficos
+- [X] Criar Resumo
+- [ ] Verificar Coesão dos Textos
 - [ ] Revisar Termos Tecnicos e Coloca-los como Codigo
 - [ ] Conforme o Contexto, alterar a palavra Mensagem por Evento
 - [ ] Trocar Topico/Tipo para Grupo
 - [ ] Revisar termos duplicados (ex: termo1/termo2)
-- [ ] Criar Resumo
