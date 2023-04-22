@@ -2,52 +2,29 @@
 
 ### Resumo
 
-A mensageria se trata de sistemas distribuidos e independetes que se comunicam entre si. Para que essa comunicação
-ocorra, é necessário utilizar um centralizador: o `Message Broker`. Por meio dele é possivel registar, disponibilizar e
-consumir eventos. Alguns `Message Broker` permitem o armazene de eventos para serem processdados depois, como tambem a
-divisão do `Message Broker` em instâncias, permitindo com que caso ocorra algum erro numa instância outro servidor
-assuma o lugar mantendo o fluxo da aplicação. De forma semelhante, pode ocorrer nos eventos; caso um evento não consiga
-ser processado, o `Message Broker` pode solicitar o reprocessamento do evento.
+A mensageria é uma forma de organizar sistemas de forma distribuida e independetes, mas permitindo a comunicação entre
+si. O modulos responsavel por essa comunicção é o `Message Broker`: Ele recebe e distribui os eventos para os serviços
+responsaveis.
 
-Como os eventos ficam centralizados no `Message Broker`, é possivel ter diversos sistemas independentes conectados nele,
-fazendo a publicação e/ou consumo de eventos sem saberem a Linguagem, o Dominio ou as Lógicas de Negócio do serviço.
-Esse servidor tambem gera LOGs e podem tambem armazenar os eventos, permitindo que numa situação de irregularidade dos
-dados, seja possivel reprocessar os eventos e voltar ao estado real da aplicação.
+Por meio do `Message Broker` é possivel registar, disponibilizar e consumir eventos. Como se trata de uma estrtutura
+centralizadora é possivel ter diferentes sistemas conectados nele, independete da Tecnologia, Linguagem, Dominio ou
+as Lógicas Internas de Negócio, deixando esses pontos específicos à nivel do proprio serviço.
 
-Conceitos Gerais:
+Por meio das configurações do `Message Broker` é possivel separa-lo em instâncias, assegurando que caso uma instância
+deixe de funcionar corretamente outra irá substituir e garantir o funcionamento da aplicação. Outro ponto configuravel é
+o armazenamento dos eventos, permitindo o rastreio e o reprocessamento de eventos com falhas.
 
-O `Message Broker` sempre terá o conceito de centralizar e gerir os eventos, mas o padrão de mensageria seguido
-podem variar conforme a necessidade da aplicação. Os principais são:
+A arquitetura discutida seguirá o padrão FIFO (First-In, First-Out), ou seja, cria uma fila de eventos que serão
+consumidos conforme a sequência que foram criados. Para os serviços identificar, distinguir e consumir os eventos é
+utilizado um identificador chamado `Topic`, comumente é usado um texto como identificar.
 
-- Padrão FIFO: Seria a implementação de uma fila de Eventos, em que o Primeiro evento a entrar (First In), seria o
-  primeiro a ser consumido (First Out). Nesse padrão, o evento é distribuido entre os Consumidores
-- Padrão Point-To-Point: Tambem utiliza a implementação de fila, mas o evento Publicado tem como destino um Serviço
-  Especifico. É possivel utilizar dois principais Fluxos:
-    - `Fire-and-Forget`: Somente envia o evento e aguara a confirmação do recebimento peço `Message Broker`
-    - `Request/Reply`: Ao enviar um evento, é aguardado uma resposta como resultado. Nesse caso é necessario ter um
-      fluxo de envio e outro para recebimento da resposta
-- Padrão Publish/Subscriber: Nesse padrão, é possivel ter varios Publicadores de Eventos (`Publisher`) responsaveis pelo
-  envio de eventos para determinados grupos do `Message Broker`. O `Message Broker` possui varios
-  Assinantes (`Subscribers`) divididos em grupos e conectados nele para processar os eventos conforme o Grupo do Evento.
-    - Um evento pode ser consumido de diferentes maneiras:
-        - O evento é replicado aos `Subscribers` daquele grupo. Os `Subscriver` processarem um mesmo evento, mas em
-          serviços diferentes
-        - Processado apenas pelo 1° `Subscribers`
-        - Processado varias vezez
-
-Alguns dos Softwares que permitem implementar essa arquiterua são:
-
-- AWS SNS: Sistema baseado em fazer `PUSH` (Envio) de eventos entre aplicações. Pode occorer no
-  formato `A2A` (`Application to Appplication`, comunicação entre Aplicações) ou `A2P` (`Application To Person`,
-  comunicação entre Aplicação e Usuario)
-- AWS SQS: Sistema semelhante ao `RabbitMQ`, fazendo `PULL` (Recebimento) de eventos. Os eventos são colocados em Filas,
-  organizados em grupos, possuindo um prazo para serem retirados do armazenamento
-- RabbitMQ: Projeto Open Source que utiliza o Protocolo AMQP, fazendo com que apenas um `Subscriber` consuma o evento
-- Kafka: Plataforma Open Source com bastante utilização no mercado que implementa o padrão `Sub/Pub`, entregando uma
-  alta disponibilidade (varias instancias), escalabilidade e podendo aramazenar os eventos em disco.
-    - `System Registry`: define nos `Subscriber` o tipo do dado que é esperado receber pelo `Publisher`
-    - Suporte ao protocolo de **Streaming de Eventos** e a integração com diversas aplicações, linguagens.
-    - É possivel dividir os `Subscriber` em grupos, permitindo definir recursos especificos para cada grupo.
+Para implementar, é possivel usar dois Padrões: `Point-to-Point` e `Publisher-Subscriber`, variando apenas como os
+eventos serão criados e gerenciados. No `Point-to-Point` existe duas formas de considerar um evento como
+consumido: `Fire-and-Forget` (Envia o evento e espera a confiramaçao do seu registro no `Message Broker`)
+e `Request/Apply` (Espera receber uma resultado do consumo do evento). Já no padrão `Publisher-Subscriber` fica divido
+os **Produtores** (`Publiser`) e os **Consumidores** (`Subscriber`) dos eventos; além disso, os eventos podem ser
+consumidos de duas formas: apenas uma unica vez ou consumido por todos os `Subscriber` que monitoram o `Topic` daquele
+evento.
 
 | Vantagens                                                                                           | Desvantagens                                           |
 |-----------------------------------------------------------------------------------------------------|--------------------------------------------------------|
@@ -169,27 +146,30 @@ Alguns dos Softwares que permitem implementar essa arquiterua são:
 
 ### Sistemas de Mensagerias
 
-- RabbitMQ
+- RabbitMQ: Projeto Open Source que utiliza o Protocolo AMQP, fazendo com que apenas um `Subscriber` consuma o evento
     - Message Broker Open Source
     - Utiliza o Protocolo AMQP (Advanced Message Queuing Protocol): Um evento é enviado e dentro os vários consumidores,
       apenas um processa aquele evento
     - Por meio de Plugins, é possivel trabalhar com Streaming de Eventos (Streaming Text Oriented MEssaging Protocol)
 
-- Amazon SNS (Simple Notification Service)
+- Amazon SNS (Simple Notification Service): Sistema baseado em `PUSH` (Envio) de eventos entre aplicações. Funcionam no
+  formato `A2A` (`Application to Appplication`) ou `A2P` (`Application To Person`)
     - Pode ocorrer entre varios tipos de dispositivos: Entre dois microserviçoes e entre microserviço e usuario
     - Baseado no conceito de PUSH: Enviar uma mensagem para um destinatario
     - A2A: Application to Application: Repassa mensagens entre aplicações por meio do AWS SQS, AWS Lambda (serveless),
       Endpoints HTTPs (CAllback HTTPs) ou outros metodos
     - A2P: Application to Person: Envio de SMS, Notificação, E-mails para o Usuario
 
-- Amazon SQS (Simple Queue Service)
+- Amazon SQS (`Simple Queue Service`): Realiza o `PULL` (Recebimento) de eventos. Os eventos são organizados em Fila,
+  dividos em `Topics` e possuem um prazo de validade.
     - Semelhante ao RabbitMQ, mas gerenciado e hospedado pela AWS
     - Baseado no conceito de PULL: Recebe uma mensagem para armazenar
     - Sistema de Fila: Recebe e Armazena Mensagens para que outros serviços utilizem
         - Os itens armazenados tem que ter uma validade para serem retirados do armazenamento
         - Os itens são aramzenados em Topicos/Tipos para depois poderem ser consumidos por outros sistemas
 
-- Kafka
+- Kafka: Plataforma Open Source com alta utilização no mercado. Implementa o padrão `Sub/Pub`, entregando alta
+  disponibilidade (varias instancias), escalabilidade e permitindo o aramazenametno dos Eventos.
     - Plataforma Distribuida desenvolvida em Java. Open Source desenvolvida pela Linkedin e mantida pelo Confluence
     - Permite o Armazenamento Permanente: Guarda os eventos em disco, até atingir um limite
     - Alta Disponibilidade, Escalabilidade e Fault-Tolerant: Caso um servidor deixe de funcionar, as demais instancias
